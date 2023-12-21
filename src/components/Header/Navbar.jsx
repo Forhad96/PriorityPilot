@@ -11,6 +11,7 @@ import {
   Avatar,
   Card,
   IconButton,
+  Collapse,
 } from "@material-tailwind/react";
 import {
   CubeTransparentIcon,
@@ -25,7 +26,7 @@ import {
   RocketLaunchIcon,
   Bars2Icon,
 } from "@heroicons/react/24/solid";
-import { NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 
 // profile menu component
 const profileMenuItems = [
@@ -269,13 +270,13 @@ export function ComplexNavbar() {
         </IconButton>
 
         <Button size="sm" variant="text">
-          <span>Log In</span>
+          <Link to='/login'>Log In</Link>
         </Button>
         <ProfileMenu />
       </div>
-      <MobileNav open={isNavOpen} className="overflow-scroll">
+      <Collapse open={isNavOpen} className="overflow-scroll">
         <NavList />
-      </MobileNav>
+      </Collapse>
     </Navbar>
   );
 }

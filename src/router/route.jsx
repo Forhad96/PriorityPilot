@@ -3,6 +3,8 @@ import MainLayout from "../layout/MainLayout";
 import Dashboard from "../layout/DashboardLayout/Dashboard";
 import AddTask from "../pages/Dashboard/AddTask/AddTask";
 import Home from "../pages/Home/Home";
+import { Login } from "../pages/Login/Login";
+import { Register } from "../pages/Resgister/Register";
 
 const route = createBrowserRouter([
   {
@@ -12,6 +14,15 @@ const route = createBrowserRouter([
       {
         path:'/',
         element:<Home/>
+
+      },
+      {
+        path:'/login',
+        element:<Login/>
+      },
+      {
+        path:'/register',
+        element:<Register/>
       }
     ]
   },

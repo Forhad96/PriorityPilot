@@ -15,6 +15,7 @@ import {
   InboxIcon,
   PowerIcon,
   HomeIcon,
+  PlusIcon,
 } from "@heroicons/react/24/solid";
 import { Link } from "react-router-dom";
 import { DashboardNav } from "./DashboardNav";
@@ -43,9 +44,9 @@ export function Sidebar() {
      </ListItem>
      <ListItem>
        <ListItemPrefix>
-         <PresentationChartBarIcon className="h-5 w-5" />
+         <PlusIcon className="h-5 w-5" />
        </ListItemPrefix>
-       <Link to="/dashboard/addTodo"> Add-Todo</Link>
+       <Link to="/dashboard/addTodo"> Create-todo</Link>
      </ListItem>
      <ListItem>
        <ListItemPrefix>
