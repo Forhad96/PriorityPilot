@@ -24,19 +24,25 @@ export function Register() {
   } = useForm();
   const onSubmit = async (data) => {
     try {
-      const name = data.name
-      const email = data.email
-      const password = data.password
+      const { name, email, password } = data;
 
-      await createUser(email,password);
-      await updateProfile(name)
-       toast.success('Account created successful')
-      const res = axiosSecure.post('/users',data)
-      console.log(res);
-      
+      // Step 1: Create the user
+      const userRes = await createUser(email, password);
+      console.log(userRes);
+      if (userRes.user) {
+        // Step 2: Update user profile
+        //  await updateProfile(name);
+
+        // Step 3: Notify success
+        toast.success("Account created successfully");
+
+        // Step 4: Make a POST request to the '/users' endpoint
+        const res = await axiosSecure.post("/users", data);
+        console.log(res);
+      }
     } catch (error) {
-      console.log(error.code);
-      toast.error(error.code)
+      console.error(error);
+      toast.error(error.message || "An error occurred");
     }
   };
 

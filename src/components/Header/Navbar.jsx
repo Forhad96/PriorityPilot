@@ -198,9 +198,9 @@ const navListItems = [
     path: "dashboard",
   },
   {
-    label: "Blocks",
+    label: "Login",
     icon: CubeTransparentIcon,
-    path: "dashboard",
+    path: "login",
   },
   {
     label: "Docs",

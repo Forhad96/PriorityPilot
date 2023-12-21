@@ -1,39 +1,22 @@
-import { Input, Textarea, Select, Button } from "@material-tailwind/react";
+import { Input, Textarea, Select, Button, Option } from "@material-tailwind/react";
 const AddTask = () => {
   return (
-    <form className="space-y-6 mt-4" onSubmit={"handleAddTask"}>
+    <form className="space-y-6 mt-4 max-w-md" onSubmit={"handleAddTask"}>
       <div>
-        <div className="flex items-center justify-between">
+        <div className="my-2">
           <label htmlFor="title" className="text-gray-700 text-sm font-bold">
             Title
           </label>
-          {/* <Priority
-            handlePrioritySelect={handlePrioritySelect}
-            selectedPriority={selectedPriority}
-          /> */}
+          <Input color="teal" label="Title" />
         </div>
-        <div className="mt-1 border-b-1 border-b-[#80808082]">
-          <Input
-            type="text"
-            id="title"
-            name="title"
-            placeholder="Enter your task title"
-            required
-            outline
-          />
-        </div>
+        <Select color="teal" label="Select Version">
+          <Option>High</Option>
+          <Option>Moderate</Option>
+          <Option>Low</Option>
+        </Select>
       </div>
       <div>
-        <div className="mt-1">
-          <div className="w-full flex flex-col gap-2">
-            <Textarea
-              name="description"
-              label="Description"
-              labelPlacement="outside"
-              placeholder="Enter your task description"
-            />
-          </div>
-        </div>
+        <Textarea color="teal" label="Enter your task description" />
         {/* Deadline starts here */}
         <div className="flex space-x-4 mt-5">
           <div>
