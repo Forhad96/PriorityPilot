@@ -6,10 +6,25 @@ import {
   Typography,
 } from "@material-tailwind/react";
 import { Link } from "react-router-dom";
+import { useForm } from "react-hook-form";
 
 export function Login() {
+  const {
+    register,
+    handleSubmit,
+    watch,
+    formState: { errors },
+  } = useForm();
+  const onSubmit = (data) => console.log(data);
+
+  console.log(watch("example")); // watch input value by passing the name of it
+
   return (
-    <Card className="flex items-center justify-center h-screen" color="transparent" shadow={false}>
+    <Card
+      className="flex items-center justify-center h-screen"
+      color="transparent"
+      shadow={false}
+    >
       <Typography variant="h4" color="blue-gray">
         Login
       </Typography>
@@ -65,8 +80,8 @@ export function Login() {
         </Button>
         <Typography color="gray" className="mt-4 text-center font-normal">
           Create an account?{" "}
-          <Link to='/register' className="font-medium text-gray-900">
-          Register
+          <Link to="/register" className="font-medium text-gray-900">
+            Register
           </Link>
         </Typography>
       </form>

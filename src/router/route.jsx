@@ -5,6 +5,7 @@ import AddTask from "../pages/Dashboard/AddTask/AddTask";
 import Home from "../pages/Home/Home";
 import { Login } from "../pages/Login/Login";
 import { Register } from "../pages/Resgister/Register";
+import { Tasks } from "../pages/Tasks/Tasks";
 
 const route = createBrowserRouter([
   {
@@ -34,6 +35,10 @@ const route = createBrowserRouter([
         path: "addTodo",
         element: <AddTask />,
       },
+      {
+        path:'tasks',
+        element:<Tasks/>
+      }
     ],
   },
 ]);

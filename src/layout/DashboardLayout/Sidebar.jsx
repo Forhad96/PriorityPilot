@@ -16,6 +16,7 @@ import {
   PowerIcon,
   HomeIcon,
   PlusIcon,
+  ListBulletIcon,
 } from "@heroicons/react/24/solid";
 import { Link } from "react-router-dom";
 import { DashboardNav } from "./DashboardNav";
@@ -41,6 +42,12 @@ export function Sidebar() {
          <HomeIcon className="h-5 w-5" />
        </ListItemPrefix>
        <Link to="/"> Home</Link>
+     </ListItem>
+     <ListItem>
+       <ListItemPrefix>
+         <ListBulletIcon className="h-5 w-5" />
+       </ListItemPrefix>
+       <Link to="/dashboard/tasks">Tasks</Link>
      </ListItem>
      <ListItem>
        <ListItemPrefix>
