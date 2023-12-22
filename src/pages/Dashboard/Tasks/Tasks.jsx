@@ -1,4 +1,7 @@
+
+import React from "react";
 import {
+
   Button,
   CardHeader,
   Tab,
@@ -10,11 +13,15 @@ import { TaskCard } from "../../../components/TaskCard/TaskCard";
 import { PlusIcon } from "@heroicons/react/24/solid";
 import useGetSecureData from "../../../hooks/secure/useGetSecureData";
 import Loading from "../../../shared/Loading/Loading";
-import { useEffect, useState } from "react";
+import { useState } from "react";
+import { Modal } from "../../../shared/Modal/Modal";
+import CreateTodo from "../CreateTodo/CreateTodo";
+
+
 
 const Tasks = () => {
   const [status, setStatus] = useState("");
-  // const [tasks,setTasks] = useState()
+  const [open, setOpen] = useState(false);
   const apiUrl = `/tasks/${status}`;
   const key = "tasks";
   const { data: tasks, isLoading, refetch } = useGetSecureData(apiUrl, key);
@@ -28,6 +35,7 @@ const Tasks = () => {
     setStatus(status);
     refetch();
   };
+
   return (
     <div>
       <CardHeader floated={false} shadow={false} className="rounded-none">
@@ -38,7 +46,11 @@ const Tasks = () => {
             </Typography>
           </div>
           <div className="flex shrink-0 flex-col gap-2 sm:flex-row">
-            <Button className="flex items-center gap-3" size="sm">
+            <Button
+              onClick={()=>setOpen(true)}
+              className="flex items-center gap-3"
+              size="sm"
+            >
               <PlusIcon strokeWidth={2} className="h-4 w-4" /> Add Todo
             </Button>
           </div>
@@ -62,6 +74,10 @@ const Tasks = () => {
           <TaskCard key={task._id} task={task} />
         ))}
       </div>
+
+      <Modal open={open} setOpen={setOpen}>
+        <CreateTodo setOpen={setOpen}/>
+      </Modal>
     </div>
   );
 };
