@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 
 import { useEffect } from "react";
 import useAuth from "../Auth/UseAuth";
-
+const baseURL = import.meta.env.VITE_BASE_URL;
 const createAxiosInstance = (baseURL) => {
   return axios.create({
     baseURL,
@@ -11,7 +11,7 @@ const createAxiosInstance = (baseURL) => {
   });
 };
 
-const useXiosSecure = (baseURL) => {
+const useXiosSecure = () => {
   const goTo = useNavigate();
   const { logOut } = useAuth();
 

@@ -8,6 +8,7 @@ import {
   Typography,
 } from "@material-tailwind/react";
 const TaskView = ({ task }) => {
+    console.log(task);
   return (
     <TimelineItem className="h-28">
       <TimelineConnector className="!w-[78px]" />
@@ -27,13 +28,21 @@ const TaskView = ({ task }) => {
           </div>
 
           <div>
-            <p>{task.status}</p>
-            <p>{task.priority}</p>
+            <p>Status:{task.status}</p>
+            <p>
+              Priority:<span>{task.priority}</span>
+            </p>
             <p>Created by</p>
           </div>
         </div>
       </TimelineHeader>
     </TimelineItem>
   );
+};
+
+import PropTypes from 'prop-types';
+
+TaskView.propTypes = {
+    task: PropTypes.object.isRequired,
 };
 export default TaskView;

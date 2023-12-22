@@ -10,37 +10,83 @@ import {
 } from "@material-tailwind/react";
 import { useForm } from "react-hook-form";
 import TaskView from "./TaskView";
+import useAuth from "../../../hooks/Auth/UseAuth";
+import usePostSecureData from "../../../hooks/secure/usePostSecureData";
 const AddTask = () => {
+  const apiUrl = '/task'
+  const mutationKey = 'task'
+  const {user} = useAuth()
+  const { mutate, data, isLoading, isError } = usePostSecureData(
+    apiUrl,
+    mutationKey
+  );
   const {
     register,
     handleSubmit,
-    watch,
     formState: { errors },
   } = useForm();
 
-  const onSubmit = (data) => console.log(data);
+  const onSubmit = async(data) => {
+    console.log(data)
+const {title,priority,deadline_date,deadline_time} = data;
+
+    try {
+      const task = {
+        createdBy: user?.email,
+        title,
+        priority,
+        deadline_date,
+        deadline_time,
+      };
+      await mutate(task)
+
+      // const res = await 
+    } catch (error) {
+      console.log(error);
+      
+    }
+  };
+
+    if (isLoading) {
+      return <p>Loading...</p>;
+    }
+
+    if (isError) {
+      return <p>Error occurred</p>;
+    }
 
   return (
-    <div className="flex justify-between gap-5 mt-4">
-      <form className="space-y-6 max-w-md max-h-[480px] shadow-lg border-2 p-4 rounded-xl" onSubmit={handleSubmit(onSubmit)}>
+    <div className="grid md:grid-cols-2 gap-5 mt-4">
+      <form
+        className="space-y-6 max-w-md max-h-[480px] shadow-lg border-2 p-4 rounded-xl"
+        onSubmit={handleSubmit(onSubmit)}
+      >
         <div>
           <div className="my-2">
             <label htmlFor="title" className="text-gray-700 text-sm font-bold">
               Title
             </label>
-            <Input color="teal" label="Title" />
+            <Input
+              {...register("title",)}
+              color="teal"
+              label="Title"
+            />
           </div>
-          <Select color="teal" label="Select priority">
-            <Option>High</Option>
-            <Option>Moderate</Option>
-            <Option>Low</Option>
+          <Select
+            {...register("priority",)}
+            color="teal"
+            label="Select priority"
+          >
+            <Option value="High">High</Option>
+            <Option value="Moderate">Moderate</Option>
+            <Option value="Low">Low</Option>
           </Select>
         </div>
         <div>
           <Textarea color="teal" label="Enter your task description" />
           {/* Deadline starts here */}
           <div className="flex space-x-4 mt-5">
-            <div>
+            {/* <div>
               <label
                 htmlFor="deadline-date"
                 className="text-gray-700 text-sm font-bold"
@@ -51,10 +97,17 @@ const AddTask = () => {
                 type="date"
                 id="deadline-date"
                 name="deadline-date"
+                {...register("deadline-date",)}
                 required
               />
-            </div>
-            <div>
+            </div> */}
+            <Input
+              {...register("deadline_date",)}
+              color="teal"
+              label="Deadline date"
+              type="date"
+            />
+            {/* <div>
               <label
                 htmlFor="deadline-time"
                 className="text-gray-700 text-sm font-bold"
@@ -67,7 +120,13 @@ const AddTask = () => {
                 name="deadline-time"
                 required
               />
-            </div>
+            </div> */}
+            <Input
+              {...register("deadline_time",)}
+              color="teal"
+              label="Deadline time"
+              type="time"
+            />
           </div>
           {/* Deadline ends here */}
         </div>
@@ -80,7 +139,7 @@ const AddTask = () => {
       {/* right side components */}
 
       <Timeline className=" overflow-y-scroll">
-        {tasks?.map((task) => (
+        {tasks?.map((task,idx) => (
           <TaskView task={task} key={task.id} />
         ))}
       </Timeline>
@@ -112,7 +171,7 @@ const tasks = [{
   "assignedTo": ["8743289"]
 },
 {
-  "id": "2",  
+  "id": "3",  
   "title": "Write blog post",
   "description": "Write a blog post about latest product features to publish", 
   "status": "inprogress",
@@ -122,7 +181,7 @@ const tasks = [{
   "assignedTo": ["8743289"]
 },
 {
-  "id": "2",  
+  "id": "4",  
   "title": "Write blog post",
   "description": "Write a blog post about latest product features to publish", 
   "status": "inprogress",
@@ -132,7 +191,7 @@ const tasks = [{
   "assignedTo": ["8743289"]
 },
 {
-  "id": "2",  
+  "id": "5",  
   "title": "Write blog post",
   "description": "Write a blog post about latest product features to publish", 
   "status": "inprogress",
@@ -142,7 +201,7 @@ const tasks = [{
   "assignedTo": ["8743289"]
 },
 {
-  "id": "2",  
+  "id": "6",  
   "title": "Write blog post",
   "description": "Write a blog post about latest product features to publish", 
   "status": "inprogress",
@@ -152,7 +211,7 @@ const tasks = [{
   "assignedTo": ["8743289"]
 },
 {
-  "id": "2",  
+  "id": "7",  
   "title": "Write blog post",
   "description": "Write a blog post about latest product features to publish", 
   "status": "inprogress",
@@ -162,7 +221,7 @@ const tasks = [{
   "assignedTo": ["8743289"]
 },
 {
-  "id": "2",  
+  "id": "8",  
   "title": "Write blog post",
   "description": "Write a blog post about latest product features to publish", 
   "status": "inprogress",
@@ -172,7 +231,7 @@ const tasks = [{
   "assignedTo": ["8743289"]
 },
 {
-  "id": "2",  
+  "id": "9",  
   "title": "Write blog post",
   "description": "Write a blog post about latest product features to publish", 
   "status": "inprogress",
@@ -182,7 +241,7 @@ const tasks = [{
   "assignedTo": ["8743289"]
 },
 {
-  "id": "2",  
+  "id": "10",  
   "title": "Write blog post",
   "description": "Write a blog post about latest product features to publish", 
   "status": "inprogress",
@@ -193,7 +252,7 @@ const tasks = [{
 },
 
 {
-  "id": "3",
+  "id": "11",
   "title": "Update servers",
   "description": "Update packages and deploy new code to production servers",
   "status": "todo", 
