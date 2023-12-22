@@ -42,7 +42,7 @@ const TasksNew = () => {
         </div>
       </CardHeader>
 
-      <div className="grid gap-5 md:grid-cols-3">
+      <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
         {tasks?.map(
           (task) => 
       <TaskCard key={task._id} task={task} />

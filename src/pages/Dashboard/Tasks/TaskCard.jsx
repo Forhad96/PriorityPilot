@@ -18,6 +18,7 @@ import {
   IconButton,
   Chip,
 } from "@material-tailwind/react";
+import { convertTime } from "../../../utils/convertTime";
 
 export function TaskCard({ task }) {
   const {
@@ -34,7 +35,9 @@ export function TaskCard({ task }) {
     <Card className="mt-6 w-80">
       <CardBody>
         <div className="flex items-center justify-between ">
-          {(status === "todo" && <RectangleStackIcon color="" className="w-10 text-light-blue-600" />) ||
+          {(status === "todo" && (
+            <RectangleStackIcon color="" className="w-10 text-light-blue-600" />
+          )) ||
             (status === "ongoing" && (
               <RocketLaunchIcon color="" className="w-10 text-pink-600" />
             )) ||
@@ -57,6 +60,19 @@ export function TaskCard({ task }) {
           {title}
         </Typography>
         <Typography>{description}</Typography>
+        <Typography className="w-max flex justify-between gap-3">
+          <Chip
+            size="sm"
+            color={
+              (priority === "high" && "red") ||
+              (priority === "moderate" && "lime") ||
+              (priority === "low" && "blue-gray")
+            }
+            value={priority}
+          />
+          <Chip size="sm" value={deadline_date} />
+          <Chip size="sm" value={convertTime(deadline_time)} />
+        </Typography>
       </CardBody>
       <CardFooter className="pt-0 flex  justify-evenly">
         <div className="mx-w-16">
