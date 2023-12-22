@@ -1,0 +1,49 @@
+-todo:create api for create new todo
+-todo:create new todo and display
+-todo:create modal for create new todo
+-todo:create api for update todo
+-todo:display todo data
+-todo:implement search functionality 
+-todo:validation 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+1. Create Responsive Design
+
+Use CSS media queries and Flexbox/Grid to create a responsive design for mobile, tablet and desktop screens.
+Test the site across various viewport widths to ensure elements adapt and layout adjusts smoothly.
+2. Landing Page
+
+Create a Navbar component with React Router links to Home, About, Contact pages etc.
+Add a banner image or carousel with call-to-action button.
+Button clicks redirect to Login page.
+Create reusable Card and UserIcon components to display user types.
+Create and style Footer component with social media links.
+3. User Authentication
+
+Implement Sign Up, Login forms with validation.
+Set up Firebase or JSON Server for authentication and storing user data.
+Allow login via Google OAuth.
+Store JWT token in localStorage after login.
+Protect Dashboard Route from public access.
+4. Task Dashboard
+
+Create TaskForm component to add new tasks using React Hook Form.
+Display tasks in different status lists using drag & drop with react-beautiful-dnd.
+Add delete task functionality.
+Fetch tasks from backend API on mount and update lists on status change.
+5. Bonus
+
+Show toast notifications for task events using react-toastify
+Add page transitions and animations with Framer Motion
