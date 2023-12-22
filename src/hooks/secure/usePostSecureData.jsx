@@ -2,7 +2,6 @@ import { useMutation } from "@tanstack/react-query";
 import useXiosSecure from "./useXiosSecure";
 
 const usePostSecureData = (endpoint, key) => {
-
   const axiosSecure = useXiosSecure();
 
   const postSecureData = async (data) => {

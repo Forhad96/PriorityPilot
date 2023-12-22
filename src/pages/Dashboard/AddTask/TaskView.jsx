@@ -6,9 +6,10 @@ import {
   TimelineConnector,
   TimelineHeader,
   Typography,
+  Chip,
 } from "@material-tailwind/react";
 const TaskView = ({ task }) => {
-    console.log(task);
+    // console.log(task);
   return (
     <TimelineItem className="h-28">
       <TimelineConnector className="!w-[78px]" />
@@ -23,16 +24,30 @@ const TaskView = ({ task }) => {
             </Typography>
             <Typography variant="small" color="gray" className="font-normal">
               {/* 22 DEC 7:20 PM */}
-              {task?.deadline}
+              {task?.deadline_date}
             </Typography>
           </div>
 
           <div>
+            <div className="w-max">
+              <Chip
+                size="sm"
+                variant="ghost"
+                value={task?.status}
+                color={
+                  status === "paid"
+                    ? "green"
+                    : status === "pending"
+                    ? "amber"
+                    : "red"
+                }
+              />
+            </div>
             <p>Status:{task.status}</p>
             <p>
               Priority:<span>{task.priority}</span>
             </p>
-            <p>Created by</p>
+            {/* <p>Created by</p> */}
           </div>
         </div>
       </TimelineHeader>
