@@ -11,7 +11,8 @@ import PrivateRoute from "./PrivateRoutes";
 import Contact from "../pages/Contact/Contact";
 import About from "../pages/About/About";
 import Ongoing from "../pages/Dashboard/Ongoing/Ongoing";
-import TasksNew from "../pages/Dashboard/Tasks/Tasks";
+import Tasks from "../pages/Dashboard/Tasks/Tasks";
+import Complete from "../pages/Dashboard/Complete/Complete";
 
 const route = createBrowserRouter([
   {
@@ -50,21 +51,25 @@ const route = createBrowserRouter([
     children: [
       {
         index: true,
-        element: <TasksNew />,
+        element: <Tasks />,
       },
       {
         path: "addTodo",
         element: <AddTask />,
       },
 
-      // {
-      //   path: "tasks",
-      //   // index:true,
-      //   element: <Tasks />,
-      // },
+      {
+        path: "tasks",
+        // index:true,
+        element: <Tasks />,
+      },
       {
         path: "ongoing",
         element: <Ongoing />,
+      },
+      {
+        path: "complete",
+        element: <Complete />,
       },
     ],
   },

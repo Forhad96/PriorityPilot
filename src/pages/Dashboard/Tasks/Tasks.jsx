@@ -1,18 +1,33 @@
-import { Button, CardHeader, Tab, Tabs, TabsHeader, Typography } from "@material-tailwind/react";
-import { TaskCard } from "./TaskCard";
+import {
+  Button,
+  CardHeader,
+  Tab,
+  Tabs,
+  TabsHeader,
+  Typography,
+} from "@material-tailwind/react";
+import { TaskCard } from "../../../components/TaskCard/TaskCard";
 import { PlusIcon } from "@heroicons/react/24/solid";
 import useGetSecureData from "../../../hooks/secure/useGetSecureData";
 import Loading from "../../../shared/Loading/Loading";
+import { useEffect, useState } from "react";
 
-const TasksNew = () => {
-      const apiUrl = "/tasks";
-      const key = "tasks";
-      const { data: tasks,isLoading } = useGetSecureData(apiUrl, key);
+const Tasks = () => {
+  const [status, setStatus] = useState("");
+  // const [tasks,setTasks] = useState()
+  const apiUrl = `/tasks/${status}`;
+  const key = "tasks";
+  const { data: tasks, isLoading, refetch } = useGetSecureData(apiUrl, key);
+  console.log(status);
 
+  if (isLoading) {
+    return <Loading />;
+  }
 
-      if(isLoading){
-        return <Loading/>
-      }
+  const handleTab = (status) => {
+    setStatus(status);
+    refetch();
+  };
   return (
     <div>
       <CardHeader floated={false} shadow={false} className="rounded-none">
@@ -31,8 +46,8 @@ const TasksNew = () => {
         <div className="flex flex-col items-center justify-between gap-4 md:flex-row">
           <Tabs value="all" className="w-full md:w-max">
             <TabsHeader>
-              {TABS.map(({ label, value }) => (
-                <Tab key={value} value={value}>
+              {TABS.map(({ label, value, status }) => (
+                <Tab key={value} onBlur={() => handleTab(status)} value={value}>
                   &nbsp;&nbsp;{label}&nbsp;&nbsp;
                 </Tab>
               ))}
@@ -43,27 +58,28 @@ const TasksNew = () => {
       </CardHeader>
 
       <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
-        {tasks?.map(
-          (task) => 
-      <TaskCard key={task._id} task={task} />
-        )}
+        {tasks?.map((task) => (
+          <TaskCard key={task._id} task={task} />
+        ))}
       </div>
-
     </div>
   );
 };
-export default TasksNew;
+export default Tasks;
 const TABS = [
   {
     label: "All",
     value: "all",
+    status: "",
   },
   {
     label: "Ongoing",
     value: "ongoing",
+    status: "ongoing",
   },
   {
     label: "Complete",
     value: "complete",
+    status: "complete",
   },
 ];

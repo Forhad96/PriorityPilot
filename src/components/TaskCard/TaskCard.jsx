@@ -18,7 +18,7 @@ import {
   IconButton,
   Chip,
 } from "@material-tailwind/react";
-import { convertTime } from "../../../utils/convertTime";
+import { convertTime } from "../../utils/convertTime";
 
 export function TaskCard({ task }) {
   const {
@@ -97,3 +97,8 @@ export function TaskCard({ task }) {
     </Card>
   );
 }
+import PropTypes from "prop-types";
+
+TaskCard.propTypes = {
+  task: PropTypes.object.isRequired,
+};
