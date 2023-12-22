@@ -50,8 +50,8 @@ const route = createBrowserRouter([
         element: <AddTask />,
       },
       {
-        path: "tasks",
-        element: <Tasks />,
+        path: 'tasks',
+        element: <Tasks/>,
       },
     ],
   },

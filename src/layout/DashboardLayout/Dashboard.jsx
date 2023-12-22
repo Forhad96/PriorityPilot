@@ -4,13 +4,15 @@ import { DashboardNav } from "./DashboardNav";
 
 const Dashboard = () => {
   return (
-    <div className="flex justify-between mx-auto max-w-7xl">
-      <div className="">
-        <Sidebar />
-      </div>
-      <div className="flex-1">
-        <DashboardNav />
-        <Outlet/>
+    <div>
+      <DashboardNav />
+      <div className="flex justify-between mx-auto max-w-7xl mt-2">
+        <div className= "hidden md:block">
+          <Sidebar />
+        </div>
+        <div className="flex-1">
+          <Outlet />
+        </div>
       </div>
     </div>
   );

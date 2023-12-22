@@ -17,21 +17,27 @@ import {
   HomeIcon,
   PlusIcon,
   ListBulletIcon,
+  TrashIcon,
+  ArchiveBoxArrowDownIcon,
+  ArchiveBoxXMarkIcon,
+  CheckBadgeIcon,
+  CheckCircleIcon,
+  GifIcon,
+  ChevronDoubleRightIcon,
+  WindowIcon,
 } from "@heroicons/react/24/solid";
 import { Link } from "react-router-dom";
 import { DashboardNav } from "./DashboardNav";
 
 export function Sidebar() {
   return (
-    
     <Card className="h-[calc(100vh-2rem)] w-full max-w-[20rem] p-4 shadow-xl shadow-blue-gray-900/5">
       <div className="mb-2 p-4">
         <Typography variant="h5" color="blue-gray">
-          OrganizeMeNow
+          {/* <img src="/Black logo - no background.png" alt="" /> */}
         </Typography>
-
       </div>
-    {dashboardLinks}
+      {dashboardLinks}
     </Card>
   );
 }
@@ -45,7 +51,7 @@ export function Sidebar() {
      </ListItem>
      <ListItem>
        <ListItemPrefix>
-         <ListBulletIcon className="h-5 w-5" />
+         <WindowIcon className="h-5 w-5" />
        </ListItemPrefix>
        <Link to="/dashboard/tasks">Tasks</Link>
      </ListItem>
@@ -55,6 +61,31 @@ export function Sidebar() {
        </ListItemPrefix>
        <Link to="/dashboard/addTodo"> Create-todo</Link>
      </ListItem>
+     <ListItem>
+       <ListItemPrefix>
+         <ChevronDoubleRightIcon className="h-5 w-5" />
+       </ListItemPrefix>
+       <Link to="/dashboard/ongoing">Ongoing Tasks</Link>
+     </ListItem>
+     <ListItem>
+       <ListItemPrefix>
+         <CheckCircleIcon className="h-5 w-5" />
+       </ListItemPrefix>
+       <Link to="/dashboard/complete">Completed Tasks</Link>
+     </ListItem>
+     <ListItem>
+       <ListItemPrefix>
+         <ArchiveBoxArrowDownIcon className="h-5 w-5" />
+       </ListItemPrefix>
+       <Link to="/dashboard/achieved">Achieved Tasks</Link>
+     </ListItem>
+     <ListItem>
+       <ListItemPrefix>
+         <TrashIcon className="h-5 w-5" />
+       </ListItemPrefix>
+       <Link to="/dashboard/trash"> Trash</Link>
+     </ListItem>
+
      <ListItem>
        <ListItemPrefix>
          <InboxIcon className="h-5 w-5" />

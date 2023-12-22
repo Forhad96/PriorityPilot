@@ -20,11 +20,12 @@ const Banner = () => {
             TaskManage to enhance coordination across their organizations.
           </p>
           <div className="mt-4">
-            <Link to='/dashboard'
+            <Link
+              to="/dashboard"
               href="#contact"
               className="px-5 py-3 text-lg tracking-wider text-white bg-blue-500 rounded-lg md:px-8 hover:bg-blue-600 group"
             >
-              <span>Explore More</span>{" "}
+              <span>Let&apos;s Explore</span>{" "}
             </Link>
           </div>
         </div>

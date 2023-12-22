@@ -1,5 +1,5 @@
 import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
-import { PencilIcon, UserPlusIcon } from "@heroicons/react/24/solid";
+import { PencilIcon, PlusIcon, UserPlusIcon } from "@heroicons/react/24/solid";
 import {
   Card,
   CardHeader,
@@ -23,12 +23,12 @@ const TABS = [
     value: "all",
   },
   {
-    label: "Monitored",
-    value: "monitored",
+    label: "Ongoing",
+    value: "ongoing",
   },
   {
-    label: "Unmonitored",
-    value: "unmonitored",
+    label: "Complete",
+    value: "complete",
   },
 ];
 
@@ -84,23 +84,17 @@ const TABLE_ROWS = [
 
 export function Tasks() {
   return (
-    <Card className="h-full w-full">
+    <Card className="h-full w-full my-5">
       <CardHeader floated={false} shadow={false} className="rounded-none">
         <div className="mb-8 flex items-center justify-between gap-8">
           <div>
             <Typography variant="h5" color="blue-gray">
-              Members list
-            </Typography>
-            <Typography color="gray" className="mt-1 font-normal">
-              See information about all members
+              Todos list
             </Typography>
           </div>
           <div className="flex shrink-0 flex-col gap-2 sm:flex-row">
-            <Button variant="outlined" size="sm">
-              view all
-            </Button>
             <Button className="flex items-center gap-3" size="sm">
-              <UserPlusIcon strokeWidth={2} className="h-4 w-4" /> Add member
+              <PlusIcon strokeWidth={2} className="h-4 w-4" /> Add Todo
             </Button>
           </div>
         </div>
@@ -115,10 +109,7 @@ export function Tasks() {
             </TabsHeader>
           </Tabs>
           <div className="w-full md:w-72">
-            <Input
-              label="Search"
-              icon={<MagnifyingGlassIcon className="h-5 w-5" />}
-            />
+
           </div>
         </div>
       </CardHeader>
