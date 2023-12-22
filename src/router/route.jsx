@@ -13,6 +13,7 @@ import About from "../pages/About/About";
 import Ongoing from "../pages/Dashboard/Ongoing/Ongoing";
 import Tasks from "../pages/Dashboard/Tasks/Tasks";
 import Complete from "../pages/Dashboard/Complete/Complete";
+import Statistics from "../pages/Dashboard/Statistics/Statistics";
 
 const route = createBrowserRouter([
   {
@@ -51,7 +52,7 @@ const route = createBrowserRouter([
     children: [
       {
         index: true,
-        element: <Tasks />,
+          element: <Statistics/>,
       },
       {
         path: "addTodo",
