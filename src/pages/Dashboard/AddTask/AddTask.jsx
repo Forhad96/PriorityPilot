@@ -1,4 +1,4 @@
-import { BellIcon } from "@heroicons/react/24/solid";
+
 import {
   Input,
   Textarea,
@@ -6,13 +6,10 @@ import {
   Button,
   Option,
   Timeline,
-  TimelineItem,
-  TimelineIcon,
-  TimelineConnector,
-  TimelineHeader,
-  Typography,
+
 } from "@material-tailwind/react";
 import { useForm } from "react-hook-form";
+import TaskView from "./TaskView";
 const AddTask = () => {
   const {
     register,
@@ -24,11 +21,8 @@ const AddTask = () => {
   const onSubmit = (data) => console.log(data);
 
   return (
-    <div className="flex justify-between gap-5">
-      <form
-        className="space-y-6 mt-4 max-w-md"
-        onSubmit={handleSubmit(onSubmit)}
-      >
+    <div className="flex justify-between gap-5 mt-4">
+      <form className="space-y-6 max-w-md max-h-[480px] shadow-lg border-2 p-4 rounded-xl" onSubmit={handleSubmit(onSubmit)}>
         <div>
           <div className="my-2">
             <label htmlFor="title" className="text-gray-700 text-sm font-bold">
@@ -84,25 +78,128 @@ const AddTask = () => {
         </div>
       </form>
       {/* right side components */}
-      <Timeline>
-        <TimelineItem className="h-28">
-          <TimelineConnector className="!w-[78px]" />
-          <TimelineHeader className="relative rounded-xl border border-blue-gray-50 bg-white py-3 pl-4 pr-8 shadow-lg shadow-blue-gray-900/5">
-            <TimelineIcon className="p-3" variant="ghost">
-              <BellIcon className="h-5 w-5" />
-            </TimelineIcon>
-            <div className="flex flex-col gap-1">
-              <Typography variant="h6" color="blue-gray">
-                $2400, Design changes
-              </Typography>
-              <Typography variant="small" color="gray" className="font-normal">
-                22 DEC 7:20 PM
-              </Typography>
-            </div>
-          </TimelineHeader>
-        </TimelineItem>
+
+      <Timeline className=" overflow-y-scroll">
+        {tasks?.map((task) => (
+          <TaskView task={task} key={task.id} />
+        ))}
       </Timeline>
     </div>
   );
 };
 export default AddTask;
+
+
+const tasks = [{
+  "id": "1",
+  "title": "Create wireframes",
+  "description": "Create initial wireframes and mockups for new website design in Figma",
+  "status": "todo",
+  "priority": "high",
+  "deadline": "2023-01-15T14:00:00",
+  "createdBy": "23472834", 
+  "assignedTo": ["1234839", "8743289"]  
+},
+
+{
+  "id": "2",  
+  "title": "Write blog post",
+  "description": "Write a blog post about latest product features to publish", 
+  "status": "inprogress",
+  "priority": "moderate",
+  "deadline": "2023-01-22T09:00:00",
+  "createdBy": "8743289",
+  "assignedTo": ["8743289"]
+},
+{
+  "id": "2",  
+  "title": "Write blog post",
+  "description": "Write a blog post about latest product features to publish", 
+  "status": "inprogress",
+  "priority": "moderate",
+  "deadline": "2023-01-22T09:00:00",
+  "createdBy": "8743289",
+  "assignedTo": ["8743289"]
+},
+{
+  "id": "2",  
+  "title": "Write blog post",
+  "description": "Write a blog post about latest product features to publish", 
+  "status": "inprogress",
+  "priority": "moderate",
+  "deadline": "2023-01-22T09:00:00",
+  "createdBy": "8743289",
+  "assignedTo": ["8743289"]
+},
+{
+  "id": "2",  
+  "title": "Write blog post",
+  "description": "Write a blog post about latest product features to publish", 
+  "status": "inprogress",
+  "priority": "moderate",
+  "deadline": "2023-01-22T09:00:00",
+  "createdBy": "8743289",
+  "assignedTo": ["8743289"]
+},
+{
+  "id": "2",  
+  "title": "Write blog post",
+  "description": "Write a blog post about latest product features to publish", 
+  "status": "inprogress",
+  "priority": "moderate",
+  "deadline": "2023-01-22T09:00:00",
+  "createdBy": "8743289",
+  "assignedTo": ["8743289"]
+},
+{
+  "id": "2",  
+  "title": "Write blog post",
+  "description": "Write a blog post about latest product features to publish", 
+  "status": "inprogress",
+  "priority": "moderate",
+  "deadline": "2023-01-22T09:00:00",
+  "createdBy": "8743289",
+  "assignedTo": ["8743289"]
+},
+{
+  "id": "2",  
+  "title": "Write blog post",
+  "description": "Write a blog post about latest product features to publish", 
+  "status": "inprogress",
+  "priority": "moderate",
+  "deadline": "2023-01-22T09:00:00",
+  "createdBy": "8743289",
+  "assignedTo": ["8743289"]
+},
+{
+  "id": "2",  
+  "title": "Write blog post",
+  "description": "Write a blog post about latest product features to publish", 
+  "status": "inprogress",
+  "priority": "moderate",
+  "deadline": "2023-01-22T09:00:00",
+  "createdBy": "8743289",
+  "assignedTo": ["8743289"]
+},
+{
+  "id": "2",  
+  "title": "Write blog post",
+  "description": "Write a blog post about latest product features to publish", 
+  "status": "inprogress",
+  "priority": "moderate",
+  "deadline": "2023-01-22T09:00:00",
+  "createdBy": "8743289",
+  "assignedTo": ["8743289"]
+},
+
+{
+  "id": "3",
+  "title": "Update servers",
+  "description": "Update packages and deploy new code to production servers",
+  "status": "todo", 
+  "priority": "critical",
+  "deadline": "2023-01-30T00:00:00",
+  "createdBy": "1234839",
+  "assignedTo": ["1234839","23472834"]
+}
+]
