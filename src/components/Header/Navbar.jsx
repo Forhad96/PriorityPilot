@@ -29,20 +29,38 @@ import {
 
 } from "@heroicons/react/24/solid";
 import { Link, NavLink } from "react-router-dom";
+import useAuth from "../../hooks/Auth/UseAuth";
+import toast from "react-hot-toast";
 
 // profile menu component
 const profileMenuItems = [
+  // {
+  //   label: "My Profile",
+  //   icon: UserCircleIcon,
+  // },
+  // {
+  //   label: "Edit Profile",
+  //   icon: Cog6ToothIcon,
+  // },
+  // {
+  //   label: "Inbox",
+  //   icon: InboxArrowDownIcon,
+  // },
   {
-    label: "My Profile",
-    icon: UserCircleIcon,
+    label: "dashboard",
+    icon: LifebuoyIcon,
   },
   {
-    label: "Edit Profile",
-    icon: Cog6ToothIcon,
+    label: "Task",
+    icon: LifebuoyIcon,
   },
   {
-    label: "Inbox",
-    icon: InboxArrowDownIcon,
+    label: "Ongoing Task",
+    icon: LifebuoyIcon,
+  },
+  {
+    label: "Complete Task",
+    icon: LifebuoyIcon,
   },
   {
     label: "Help",
@@ -51,14 +69,29 @@ const profileMenuItems = [
   {
     label: "Sign Out",
     icon: PowerIcon,
+
   },
 ];
 
 function ProfileMenu() {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
-
+  const {logOut} = useAuth()
   const closeMenu = () => setIsMenuOpen(false);
 
+
+  const handleSingOut = async() =>{
+    try {
+      await logOut()
+
+       toast.success("Logout successful");
+    } catch (error) {
+      console.log(error);
+      
+    }
+    console.log('ok');
+
+
+  }
   return (
     <Menu open={isMenuOpen} handler={setIsMenuOpen} placement="bottom-end">
       <MenuHandler>
@@ -103,6 +136,7 @@ function ProfileMenu() {
                 as="span"
                 variant="small"
                 className="font-normal"
+                onClick={label === "Sign Out" && handleSingOut}
                 color={isLastItem ? "red" : "inherit"}
               >
                 {label}
@@ -170,6 +204,7 @@ function NavList() {
 
 export function ComplexNavbar() {
   const [isNavOpen, setIsNavOpen] = React.useState(false);
+  const {user} = useAuth()
 
   const toggleIsNavOpen = () => setIsNavOpen((cur) => !cur);
 
@@ -181,7 +216,7 @@ export function ComplexNavbar() {
   }, []);
 
   return (
-    <Navbar className="mx-auto max-w-screen-xl p-2 lg:rounded-full lg:pl-6">
+    <Navbar className="mx-auto max-w-7xl p-2 lg:rounded-full lg:pl-6">
       <div className="relative mx-auto flex items-center justify-between text-blue-gray-900">
         <Typography
           as="a"
@@ -203,7 +238,9 @@ export function ComplexNavbar() {
           <Bars2Icon className="h-6 w-6" />
         </IconButton>
 
-        {
+        {user ? (
+          <ProfileMenu />
+        ) : (
           <Typography
             as="div"
             href="#"
@@ -211,16 +248,14 @@ export function ComplexNavbar() {
             color="gray"
             className="font-medium text-blue-gray-500"
           >
-            <NavLink to='/login'>
+            <NavLink to="/login">
               <MenuItem className="flex items-center gap-2 lg:rounded-full">
                 {/* {React.createElement(icon, { className: "h-[18px] w-[18px]" })}{" "} */}
                 <span className="text-gray-900">Login/Register</span>
               </MenuItem>
             </NavLink>
           </Typography>
-        }
-
-        {/* <ProfileMenu /> */}
+        )}
       </div>
       <Collapse open={isNavOpen} className="overflow-scroll">
         <NavList />

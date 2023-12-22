@@ -98,7 +98,7 @@ try {
           containerProps={{ className: "-ml-2.5" }}
         />
         <Button type="submit" className="mt-6" fullWidth>
-          sign up
+          Login
         </Button>
         <Typography color="gray" className="mt-4 text-center font-normal">
           Create an account?
