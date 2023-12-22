@@ -5,7 +5,7 @@ import {
   Button,
   Typography,
 } from "@material-tailwind/react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import useAuth from "../../hooks/Auth/UseAuth";
 import toast from "react-hot-toast";
@@ -13,21 +13,22 @@ import toast from "react-hot-toast";
 export function Login() {
   const { signIn } = useAuth();
   const goTo = useNavigate()
+    const location = useLocation();
   const {
     register,
     handleSubmit,
-    watch,
     formState: { errors },
   } = useForm();
   const onSubmit = async(data) => {
 try {
-  console.log(data);
+  console.log(location);
+
   const {email,password} = data
   const res = await signIn(email,password)
 
   if(res.user){
     toast.success('Login Successful')
-    goTo('/')
+    goTo(location.pathname?location.state:'/')
   }
 } catch (error) {
   console.log(error);
@@ -36,9 +37,6 @@ try {
     console.log(data)
   
   };
-
-  console.log(watch("example")); // watch input value by passing the name of it
-
   return (
     <Card
       className="flex items-center justify-center h-screen"

@@ -131,7 +131,7 @@ export function DashboardNav() {
         <div className="container mx-auto flex flex-wrap items-center justify-between text-blue-gray-900">
           <Typography
             as="a"
-            href="#"
+            href="/"
             className="mr-4 cursor-pointer py-1.5 font-medium"
           >
             <img src="/Black logo - no background.png" className="w-48" alt="" />

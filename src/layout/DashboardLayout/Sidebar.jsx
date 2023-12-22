@@ -43,30 +43,40 @@ export function Sidebar() {
 }
  const dashboardLinks = (
    <List>
-     <ListItem>
-       <ListItemPrefix>
-         <HomeIcon className="h-5 w-5" />
-       </ListItemPrefix>
-       <Link to="/"> Home</Link>
-     </ListItem>
-     <ListItem>
-       <ListItemPrefix>
-         <WindowIcon className="h-5 w-5" />
-       </ListItemPrefix>
-       <Link to="/dashboard/tasks">Tasks</Link>
-     </ListItem>
-     <ListItem>
-       <ListItemPrefix>
-         <PlusIcon className="h-5 w-5" />
-       </ListItemPrefix>
-       <Link to="/dashboard/addTodo"> Create-todo</Link>
-     </ListItem>
-     <ListItem>
-       <ListItemPrefix>
-         <ChevronDoubleRightIcon className="h-5 w-5" />
-       </ListItemPrefix>
-       <Link to="/dashboard/ongoing">Ongoing Tasks</Link>
-     </ListItem>
+     <Link to="/">
+       <ListItem>
+         <ListItemPrefix>
+           <HomeIcon className="h-5 w-5" />
+         </ListItemPrefix>
+         Home
+       </ListItem>
+     </Link>
+     <Link to="/dashboard/tasks">
+       <ListItem>
+         <ListItemPrefix>
+           <WindowIcon className="h-5 w-5" />
+         </ListItemPrefix>
+         Tasks
+       </ListItem>
+     </Link>
+
+     <Link to="/dashboard/addTodo">
+       <ListItem>
+         <ListItemPrefix>
+           <PlusIcon className="h-5 w-5" />
+         </ListItemPrefix>
+         Create-todo
+       </ListItem>
+     </Link>
+
+     <Link to="/dashboard/ongoing">
+       <ListItem>
+         <ListItemPrefix>
+           <ChevronDoubleRightIcon className="h-5 w-5" />
+         </ListItemPrefix>
+         Ongoing Tasks
+       </ListItem>
+     </Link>
      <ListItem>
        <ListItemPrefix>
          <CheckCircleIcon className="h-5 w-5" />

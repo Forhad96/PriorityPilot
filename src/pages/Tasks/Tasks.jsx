@@ -1,5 +1,5 @@
 import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
-import { PencilIcon, PlusIcon, UserPlusIcon } from "@heroicons/react/24/solid";
+import { EyeIcon, PencilIcon, PlusIcon, TrashIcon, UserPlusIcon, ViewColumnsIcon } from "@heroicons/react/24/solid";
 import {
   Card,
   CardHeader,
@@ -15,7 +15,9 @@ import {
   Avatar,
   IconButton,
   Tooltip,
+  Checkbox,
 } from "@material-tailwind/react";
+import useGetSecureData from "../../hooks/secure/useGetSecureData";
 
 const TABS = [
   {
@@ -32,7 +34,7 @@ const TABS = [
   },
 ];
 
-const TABLE_HEAD = ["Member", "Function", "Status", "Employed", ""];
+const TABLE_HEAD = ["No", "Title","Deadline date","Deadline time", "Status", "Action"];
 
 const TABLE_ROWS = [
   {
@@ -83,6 +85,19 @@ const TABLE_ROWS = [
 ];
 
 export function Tasks() {
+    const apiUrl = "/tasks";
+    const key = "tasks";
+  const {data:tasks}= useGetSecureData(apiUrl,key)
+  // {
+  //     _id: '658537a28a453324dc1d9856',
+  //     title: 'Implement new API',
+  //     description: 'Integrate the new analytics API and test thoroughly',
+  //     status: 'ongoing',
+  //     priority: 'moderate',
+  //     deadline_date: '2023-03-10',
+  //     deadline_time: '15:00',
+  //     createdBy: '1234839',
+  //     assignedTo: [ '1234839'
   return (
     <Card className="h-full w-full my-5">
       <CardHeader floated={false} shadow={false} className="rounded-none">
@@ -108,9 +123,7 @@ export function Tasks() {
               ))}
             </TabsHeader>
           </Tabs>
-          <div className="w-full md:w-72">
-
-          </div>
+          <div className="w-full md:w-72"></div>
         </div>
       </CardHeader>
       <CardBody className="overflow-scroll px-0">
@@ -134,37 +147,101 @@ export function Tasks() {
             </tr>
           </thead>
           <tbody>
-            {TABLE_ROWS.map(
-              ({ img, name, email, job, org, online, date }, index) => {
-                const isLast = index === TABLE_ROWS.length - 1;
+            {tasks?.map(
+              (
+                {
+                  _id,
+                  title,
+                  description,
+                  status,
+                  priority,
+                  deadline_date,
+                  deadline_time,
+                  createdBy,
+                },
+                index
+              ) => {
+                const isLast = index === tasks.length - 1;
                 const classes = isLast
                   ? "p-4"
                   : "p-4 border-b border-blue-gray-50";
 
                 return (
-                  <tr key={name}>
+                  <tr key={_id}>
+                    <td className={classes}>
+                      <Checkbox
+                        ripple={false}
+                        className="h-8 w-8 rounded-full border-gray-900/20 bg-gray-900/10 transition-all hover:scale-105 hover:before:opacity-0"
+                      />
+                    </td>
                     <td className={classes}>
                       <div className="flex items-center gap-3">
-                        <Avatar src={img} alt={name} size="sm" />
+                        {/* <Avatar src={img} alt={name} size="sm" /> */}
+
                         <div className="flex flex-col">
                           <Typography
                             variant="small"
                             color="blue-gray"
                             className="font-normal"
                           >
-                            {name}
+                            {title}
                           </Typography>
                           <Typography
                             variant="small"
                             color="blue-gray"
                             className="font-normal opacity-70"
                           >
-                            {email}
+                            {createdBy}
                           </Typography>
                         </div>
                       </div>
                     </td>
                     <td className={classes}>
+                      <Typography
+                        variant="small"
+                        color="blue-gray"
+                        className="font-normal"
+                      >
+                        {deadline_date}
+                      </Typography>
+                    </td>
+                    <td className={classes}>
+                      <Typography
+                        variant="small"
+                        color="blue-gray"
+                        className="font-normal"
+                      >
+                        {deadline_time}
+                      </Typography>
+                    </td>
+                    <td className={classes}>
+                      <div className="w-max">
+                        <Chip
+                          variant="ghost"
+                          size="sm"
+                          value={status}
+                          // color={online ? "green" : "blue-gray"}
+                        />
+                      </div>
+                    </td>
+                    <td className={classes}>
+                      <Tooltip content="View Task">
+                        <IconButton variant="text">
+                          <EyeIcon className="h-4 w-4" />
+                        </IconButton>
+                      </Tooltip>
+                      <Tooltip content="Edit Task">
+                        <IconButton variant="text">
+                          <PencilIcon className="h-4 w-4" />
+                        </IconButton>
+                      </Tooltip>
+                      <Tooltip content="Delete Task">
+                        <IconButton variant="text">
+                          <TrashIcon color="red" className="h-4 w-4" />
+                        </IconButton>
+                      </Tooltip>
+                    </td>
+                    {/* <td className={classes}>
                       <div className="flex flex-col">
                         <Typography
                           variant="small"
@@ -182,24 +259,14 @@ export function Tasks() {
                         </Typography>
                       </div>
                     </td>
+
+
                     <td className={classes}>
-                      <div className="w-max">
-                        <Chip
-                          variant="ghost"
-                          size="sm"
-                          value={online ? "online" : "offline"}
-                          color={online ? "green" : "blue-gray"}
-                        />
-                      </div>
-                    </td>
-                    <td className={classes}>
-                      <Typography
-                        variant="small"
-                        color="blue-gray"
-                        className="font-normal"
-                      >
-                        {date}
-                      </Typography>
+                      <Tooltip content="Edit User">
+                        <IconButton variant="text">
+                          <PencilIcon className="h-4 w-4" />
+                        </IconButton>
+                      </Tooltip>
                     </td>
                     <td className={classes}>
                       <Tooltip content="Edit User">
@@ -208,6 +275,13 @@ export function Tasks() {
                         </IconButton>
                       </Tooltip>
                     </td>
+                    <td className={classes}>
+                      <Tooltip content="Edit User">
+                        <IconButton variant="text">
+                          <PencilIcon className="h-4 w-4" />
+                        </IconButton>
+                      </Tooltip>
+                    </td> */}
                   </tr>
                 );
               }

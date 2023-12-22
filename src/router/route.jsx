@@ -9,6 +9,7 @@ import { Tasks } from "../pages/Tasks/Tasks";
 import PrivateRoute from "./PrivateRoutes";
 import Contact from "../pages/Contact/Contact";
 import About from "../pages/About/About";
+import Ongoing from "../pages/Dashboard/Ongoing/Ongoing";
 
 const route = createBrowserRouter([
   {
@@ -51,8 +52,13 @@ const route = createBrowserRouter([
       },
       {
         path: 'tasks',
+        // index:true,
         element: <Tasks/>,
       },
+      {
+        path:'ongoing',
+        element:<Ongoing/>
+      }
     ],
   },
 ]);
