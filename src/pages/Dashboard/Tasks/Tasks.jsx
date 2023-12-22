@@ -25,7 +25,7 @@ const Tasks = () => {
   const apiUrl = `/tasks/${status}`;
   const key = "tasks";
   const { data: tasks, isLoading, refetch } = useGetSecureData(apiUrl, key);
-  console.log(status);
+
 
   if (isLoading) {
     return <Loading />;

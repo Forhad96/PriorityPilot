@@ -105,3 +105,8 @@ console.log(data);
   );
 };
 export default CreateTodo;
+import PropTypes from 'prop-types';
+
+CreateTodo.propTypes = {
+    setOpen: PropTypes.bool.isRequired,
+};

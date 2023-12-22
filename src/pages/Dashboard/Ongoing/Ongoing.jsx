@@ -11,10 +11,12 @@ import { PlusIcon } from "@heroicons/react/24/solid";
 import useGetSecureData from "../../../hooks/secure/useGetSecureData";
 import Loading from "../../../shared/Loading/Loading";
 import { useState } from "react";
+import { Modal } from "../../../shared/Modal/Modal";
+import CreateTodo from "../CreateTodo/CreateTodo";
 
 const Ongoing = () => {
   const [status, setStatus] = useState("");
-  // const [tasks,setTasks] = useState()
+  const [open, setOpen] = useState(false);
   const apiUrl = `/tasks/ongoing`;
   const key = "tasks";
   const { data: tasks, isLoading, refetch } = useGetSecureData(apiUrl, key);
@@ -33,7 +35,11 @@ const Ongoing = () => {
             </Typography>
           </div>
           <div className="flex shrink-0 flex-col gap-2 sm:flex-row">
-            <Button className="flex items-center gap-3" size="sm">
+            <Button
+              onClick={() => setOpen(true)}
+              className="flex items-center gap-3"
+              size="sm"
+            >
               <PlusIcon strokeWidth={2} className="h-4 w-4" /> Add Todo
             </Button>
           </div>
@@ -45,6 +51,9 @@ const Ongoing = () => {
           <TaskCard key={task._id} task={task} />
         ))}
       </div>
+      <Modal open={open} setOpen={setOpen}>
+        <CreateTodo setOpen={setOpen} />
+      </Modal>
     </div>
   );
 };

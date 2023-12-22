@@ -43,3 +43,10 @@ export function Modal({children,open,setOpen}) {
     </>
   );
 }
+import PropTypes from 'prop-types';
+
+Modal.propTypes = {
+    children: PropTypes.node,
+    open:PropTypes.bool,
+    setOpen:PropTypes.func
+};
