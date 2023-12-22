@@ -10,11 +10,14 @@ import useXiosSecure from "../../hooks/secure/useXiosSecure";
 import useAuth from "../../hooks/Auth/UseAuth";
 import { updateProfile } from "firebase/auth";
 import toast from "react-hot-toast";
+import SocialLogin from "../SocialLogin/SocialLogin";
+import { useNavigate } from "react-router-dom";
 
 const baseURL = import.meta.env.VITE_BASE_URL;
 export function Register() {
   const axiosSecure = useXiosSecure(baseURL);
   const { createUser } = useAuth();
+  const goTo = useNavigate();
 
   const {
     register,
@@ -38,7 +41,7 @@ export function Register() {
 
         // Step 4: Make a POST request to the '/users' endpoint
         const res = await axiosSecure.post("/users", data);
-        console.log(res);
+        goTo(location.pathname ? location.state : "/");
       }
     } catch (error) {
       console.error(error);
@@ -131,6 +134,7 @@ export function Register() {
           </a>
         </Typography>
       </form>
+      <SocialLogin />
     </Card>
   );
 }

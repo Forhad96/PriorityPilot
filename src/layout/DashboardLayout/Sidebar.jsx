@@ -35,6 +35,7 @@ export function Sidebar() {
       <div className="mb-2 p-4">
         <Typography variant="h5" color="blue-gray">
           {/* <img src="/Black logo - no background.png" alt="" /> */}
+          Dashboard
         </Typography>
       </div>
       {dashboardLinks}

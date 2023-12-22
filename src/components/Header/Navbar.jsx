@@ -161,11 +161,11 @@ const navListItems = [
     icon: HomeModernIcon,
     path: "/",
   },
-  {
-    label: "Dashboard",
-    icon: UserCircleIcon,
-    path: "dashboard",
-  },
+  // {
+  //   label: "Dashboard",
+  //   icon: UserCircleIcon,
+  //   path: "dashboard",
+  // },
   {
     label: "Contact",
     icon: CodeBracketSquareIcon,
