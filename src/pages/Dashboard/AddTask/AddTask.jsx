@@ -10,18 +10,20 @@ import { useForm } from "react-hook-form";
 import TaskView from "./TaskView";
 import useAuth from "../../../hooks/Auth/UseAuth";
 import useXiosSecure from "../../../hooks/secure/useXiosSecure";
-import usePostSecureData from "../../../hooks/secure/usePostSecureData";
+
 import toast from "react-hot-toast";
 import useGetSecureData from "../../../hooks/secure/useGetSecureData";
-const baseURL = import.meta.env.VITE_BASE_URL;
+import { useState } from "react";
+import SelectPriority from "../../../components/SelectPriority/SelectPriority";
+
 const AddTask = () => {
+  const [priority, setPriority] = useState("");
   const { user } = useAuth();
+  const axiosSecure = useXiosSecure()
   const apiUrl = "/tasks";
   const mutationKey = "tasks";
-const { mutate, data, status, error } = usePostSecureData(apiUrl,mutationKey)
-const {data:tasks} = useGetSecureData(apiUrl,mutationKey)
+  const { data: tasks,refetch } = useGetSecureData(apiUrl, mutationKey);
 
-  console.log(data);
   const {
     register,
     handleSubmit,
@@ -29,22 +31,26 @@ const {data:tasks} = useGetSecureData(apiUrl,mutationKey)
   } = useForm();
 
   const onSubmit = async (data) => {
-    const { title, priority, deadline_date, deadline_time } = data;
+    const { title, deadline_date, deadline_time } = data;
 
     try {
       const task = {
         createdBy: user?.email,
-        createdAt: new Date,
+        createdAt: new Date(),
         title,
         priority,
+        status: "todo",
         deadline_date,
         deadline_time,
       };
 
-      mutate(task);
-      // console.log(data);
-      // Show toast notification on success
-      toast.success("Post successful!");
+      const res = await axiosSecure.post(apiUrl,task)
+      console.log(res);
+      if (res.data.insertedId){
+        refetch()
+      }
+        // Show toast notification on success
+        toast.success("Post successful!");
 
       // const res = await
     } catch (error) {
@@ -62,67 +68,29 @@ const {data:tasks} = useGetSecureData(apiUrl,mutationKey)
   // }
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 gap-5 mt-4">
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-5  mt-4">
       <form
         className="space-y-6 max-w-md max-h-[480px] shadow-lg border-2 p-4 rounded-xl"
         onSubmit={handleSubmit(onSubmit)}
       >
         <div>
+          <h2 className="text-3xl text-center">Add Todo</h2>
           <div className="my-2">
-            <label htmlFor="title" className="text-gray-700 text-sm font-bold">
-              Title
-            </label>
             <Input {...register("title")} color="teal" label="Title" />
           </div>
-          <Select
-            {...register("priority")}
-            color="teal"
-            label="Select priority"
-          >
-            <Option value="High">High</Option>
-            <Option value="Moderate">Moderate</Option>
-            <Option value="Low">Low</Option>
-          </Select>
+          <SelectPriority setPriority={setPriority} />
         </div>
         <div>
           <Textarea color="teal" label="Enter your task description" />
           {/* Deadline starts here */}
           <div className="flex space-x-4 mt-5">
-            {/* <div>
-              <label
-                htmlFor="deadline-date"
-                className="text-gray-700 text-sm font-bold"
-              >
-                Deadline Date
-              </label>
-              <Input
-                type="date"
-                id="deadline-date"
-                name="deadline-date"
-                {...register("deadline-date",)}
-                required
-              />
-            </div> */}
             <Input
               {...register("deadline_date")}
               color="teal"
               label="Deadline date"
               type="date"
             />
-            {/* <div>
-              <label
-                htmlFor="deadline-time"
-                className="text-gray-700 text-sm font-bold"
-              >
-                Deadline Time
-              </label>
-              <Input
-                type="time"
-                id="deadline-time"
-                name="deadline-time"
-                required
-              />
-            </div> */}
+
             <Input
               {...register("deadline_time")}
               color="teal"

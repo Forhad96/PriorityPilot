@@ -12,9 +12,9 @@ import useAuth from "../../../hooks/Auth/UseAuth";
 import useXiosSecure from "../../../hooks/secure/useXiosSecure";
 import toast from "react-hot-toast";
 const CreateTodo = ({setOpen,task}) => {
+  const [priority,setPriority] = useState('')
   const { user } = useAuth();
   const apiUrl = "/tasks";
-  const mutationKey = "tasks";
   const {
     register,
     handleSubmit,
@@ -22,7 +22,7 @@ const CreateTodo = ({setOpen,task}) => {
   } = useForm();
 const axiosSecure = useXiosSecure()
   const onSubmit = async (data) => {
-    const { title, priority, deadline_date, deadline_time } = data;
+    const { title, deadline_date, deadline_time } = data;
     const task = {
       createdBy: user?.email,
       createdAt: new Date(),
@@ -61,16 +61,7 @@ const axiosSecure = useXiosSecure()
             </label>
             <Input {...register("title")} color="teal" label="Title" />
           </div>
-          <Select
-            {...register("priority")}
-            color="teal"
-            defaultValue={task?.priority}
-            label="Select priority"
-          >
-            <Option value="High">High</Option>
-            <Option value="Moderate">Moderate</Option>
-            <Option value="Low">Low</Option>
-          </Select>
+<SelectPriority setPriority={setPriority}/>
         </div>
         <div>
           <Textarea color="teal" label="Enter your task description" />
@@ -107,6 +98,8 @@ const axiosSecure = useXiosSecure()
 };
 export default CreateTodo;
 import PropTypes from 'prop-types';
+import SelectPriority from "../../../components/SelectPriority/SelectPriority";
+import { useState } from "react";
 
 CreateTodo.propTypes = {
     setOpen: PropTypes.func.isRequired,
