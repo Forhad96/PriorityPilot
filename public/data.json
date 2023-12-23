@@ -1,0 +1,57 @@
+[
+  {
+    "_id": "658537a28a453324dc1d9856",
+    "title": "Implement new API",
+    "description": "Integrate the new analytics API and test thoroughly",
+    "status": "todo",
+    "priority": "moderate",
+    "deadline_date": "2023-03-10",
+    "deadline_time": "15:00",
+    "createdBy": "1234839",
+    "assignedTo": ["1234839"]
+  },
+  {
+    "_id": "658537b08a453324dc1da258",
+    "title": "Fix login issues",
+    "description": "Some users unable to login after last update",
+    "status": "ongoing",
+    "priority": "high",
+    "deadline_date": "2023-03-05",
+    "deadline_time": "09:30",
+    "createdBy": "8743289",
+    "assignedTo": ["8743289", "23472834"]
+  },
+  {
+    "_id": "658537c88a453324dc1db252",
+    "title": "Design homepage",
+    "description": "Create an exciting new homepage design",
+    "status": "todo",
+    "priority": "low",
+    "deadline_date": "2023-04-15",
+    "deadline_time": "12:00",
+    "createdBy": "23472834",
+    "assignedTo": ["23472834"]
+  },
+  {
+    "_id": "65859012508376f9339fdefd",
+    "title": "Design homepage",
+    "description": "Create an exciting new homepage design",
+    "status": "complete",
+    "priority": "low",
+    "deadline_date": "2023-03-15",
+    "deadline_time": "17:30",
+    "createdBy": "23472834",
+    "assignedTo": ["23472834", "1234839"]
+  },
+  {
+    "_id": "6585db848cf9eb5bc8626685",
+    "title": "Review content draft",
+    "description": "Review the 2nd draft of the website content",
+    "status": "complete",
+    "priority": "moderate",
+    "deadline_date": "2023-03-09",
+    "deadline_time": "09:00",
+    "createdBy": "1234839",
+    "assignedTo": ["8743289"]
+  }
+]

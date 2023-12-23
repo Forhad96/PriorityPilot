@@ -11,9 +11,9 @@ import {
 import useAuth from "../../../hooks/Auth/UseAuth";
 import useXiosSecure from "../../../hooks/secure/useXiosSecure";
 import toast from "react-hot-toast";
-const CreateTodo = ({setOpen}) => {
+const CreateTodo = ({setOpen,task}) => {
   const { user } = useAuth();
-  const apiUrl = "/tasksvv";
+  const apiUrl = "/tasks";
   const mutationKey = "tasks";
   const {
     register,
@@ -23,7 +23,6 @@ const CreateTodo = ({setOpen}) => {
 const axiosSecure = useXiosSecure()
   const onSubmit = async (data) => {
     const { title, priority, deadline_date, deadline_time } = data;
-console.log(data);
     const task = {
       createdBy: user?.email,
       createdAt: new Date(),
@@ -65,6 +64,7 @@ console.log(data);
           <Select
             {...register("priority")}
             color="teal"
+            defaultValue={task?.priority}
             label="Select priority"
           >
             <Option value="High">High</Option>
@@ -87,6 +87,7 @@ console.log(data);
               {...register("deadline_time")}
               color="teal"
               label="Deadline time"
+              // defaultValue={'deadline_time'}
               type="time"
             />
           </div>
@@ -108,5 +109,6 @@ export default CreateTodo;
 import PropTypes from 'prop-types';
 
 CreateTodo.propTypes = {
-    setOpen: PropTypes.bool.isRequired,
+    setOpen: PropTypes.func.isRequired,
+    task: PropTypes.object,
 };

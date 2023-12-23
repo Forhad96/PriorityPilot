@@ -1,5 +1,5 @@
 
-import React from "react";
+import { useEffect } from "react";
 import {
 
   Button,
@@ -25,19 +25,19 @@ const Tasks = () => {
   const apiUrl = `/tasks/${status}`;
   const key = "tasks";
   const { data: tasks, isLoading, refetch } = useGetSecureData(apiUrl, key);
-
-
+useEffect(()=>{
+  if(status){
+    refetch()
+  }
+},[status,refetch])
   if (isLoading) {
     return <Loading />;
   }
 
-  const handleTab = (status) => {
-    setStatus(status);
-    refetch();
-  };
+
 
   return (
-    <div>
+    <>
       <CardHeader floated={false} shadow={false} className="rounded-none">
         <div className="mb-8 flex items-center justify-between gap-8">
           <div>
@@ -47,7 +47,7 @@ const Tasks = () => {
           </div>
           <div className="flex shrink-0 flex-col gap-2 sm:flex-row">
             <Button
-              onClick={()=>setOpen(true)}
+              onClick={() => setOpen(true)}
               className="flex items-center gap-3"
               size="sm"
             >
@@ -58,8 +58,12 @@ const Tasks = () => {
         <div className="flex flex-col items-center justify-between gap-4 md:flex-row">
           <Tabs value="all" className="w-full md:w-max">
             <TabsHeader>
-              {TABS.map(({ label, value, status }) => (
-                <Tab key={value} onBlur={() => handleTab(status)} value={value}>
+              {TABS.map(({ label, value,}) => (
+                <Tab
+                  key={value}
+                  onClick={() => setStatus(value)}
+                  value={value}
+                >
                   &nbsp;&nbsp;{label}&nbsp;&nbsp;
                 </Tab>
               ))}
@@ -71,14 +75,14 @@ const Tasks = () => {
 
       <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
         {tasks?.map((task) => (
-          <TaskCard key={task._id} task={task} />
+          <TaskCard key={task._id} refetch={refetch} task={task} />
         ))}
       </div>
 
       <Modal open={open} setOpen={setOpen}>
-        <CreateTodo setOpen={setOpen}/>
+        <CreateTodo setOpen={setOpen} />
       </Modal>
-    </div>
+    </>
   );
 };
 export default Tasks;
@@ -86,16 +90,16 @@ const TABS = [
   {
     label: "All",
     value: "all",
-    status: "",
+
   },
   {
     label: "Ongoing",
     value: "ongoing",
-    status: "ongoing",
+
   },
   {
     label: "Complete",
     value: "complete",
-    status: "complete",
+
   },
 ];

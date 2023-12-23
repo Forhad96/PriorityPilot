@@ -25,7 +25,7 @@ const Complete = () => {
     return <Loading />;
   }
 
-
+console.log(status);
   return (
     <div>
       <CardHeader floated={false} shadow={false} className="rounded-none">
@@ -49,11 +49,11 @@ const Complete = () => {
 
       <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
         {tasks?.map((task) => (
-          <TaskCard key={task._id} task={task} />
+          <TaskCard refetch={refetch} setStatus={setStatus} key={task._id} task={task} />
         ))}
       </div>
       <Modal open={open} setOpen={setOpen}>
-        <CreateTodo setOpen={setOpen} />
+        <CreateTodo  setOpen={setOpen} />
       </Modal>
     </div>
   );

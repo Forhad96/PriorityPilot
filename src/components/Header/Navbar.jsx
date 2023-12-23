@@ -47,29 +47,33 @@ const profileMenuItems = [
   //   icon: InboxArrowDownIcon,
   // },
   {
-    label: "dashboard",
+    label: "Dashboard",
     icon: LifebuoyIcon,
+    path: "dashboard",
   },
   {
     label: "Task",
     icon: LifebuoyIcon,
+    path: "dashboard/tasks",
   },
   {
     label: "Ongoing Task",
     icon: LifebuoyIcon,
+    path: "dashboard/ongoing",
   },
   {
     label: "Complete Task",
     icon: LifebuoyIcon,
+    path: "dashboard/complete",
   },
   {
     label: "Help",
     icon: LifebuoyIcon,
+    path: "help",
   },
   {
     label: "Sign Out",
     icon: PowerIcon,
-
   },
 ];
 
@@ -116,7 +120,7 @@ function ProfileMenu() {
         </Button>
       </MenuHandler>
       <MenuList className="p-1">
-        {profileMenuItems.map(({ label, icon }, key) => {
+        {profileMenuItems.map(({ label, icon ,path}, key) => {
           const isLastItem = key === profileMenuItems.length - 1;
           return (
             <MenuItem
@@ -132,15 +136,17 @@ function ProfileMenu() {
                 className: `h-4 w-4 ${isLastItem ? "text-red-500" : ""}`,
                 strokeWidth: 2,
               })}
-              <Typography
-                as="span"
-                variant="small"
-                className="font-normal"
-                onClick={label === "Sign Out" && handleSingOut}
-                color={isLastItem ? "red" : "inherit"}
-              >
-                {label}
-              </Typography>
+              <Link to={path}>
+                <Typography
+                  as="span"
+                  variant="small"
+                  className="font-normal"
+                  onClick={label === "Sign Out" && handleSingOut}
+                  color={isLastItem ? "red" : "inherit"}
+                >
+                  {label}
+                </Typography>
+              </Link>
             </MenuItem>
           );
         })}
