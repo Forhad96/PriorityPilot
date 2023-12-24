@@ -8,13 +8,43 @@ import {
   Typography,
   Chip,
 } from "@material-tailwind/react";
-const TaskView = ({ task }) => {
-    // console.log(task);
+const TaskView = ({ task,refetch }) => {
+const axiosSecure = useXiosSecure()
+  const apiUrl = "/tasks/";
+    const handleDelete = async () => {
+      try {
+        let willDelete = await swal({
+          title: "Are you sure?",
+          text: "Once deleted, you will not be able to recover this imaginary file!",
+          icon: "warning",
+          buttons: true,
+          dangerMode: true,
+        });
+
+        if (willDelete) {
+          const res = await axiosSecure.delete(apiUrl + task._id);
+          console.log(res);
+
+          if (res.data.deletedCount > 0) {
+            toast.success("successfully Removed");
+            await swal("Poof! Booking cancel successful", {
+              icon: "success",
+            });
+            refetch();
+          }
+        } else {
+          await swal("Your imaginary file is safe!");
+        }
+      } catch (error) {
+        console.log(error);
+        toast.error(error.message);
+      }
+    };
   return (
     <TimelineItem className="h-28">
       <TimelineConnector className="!w-[78px]" />
       <TimelineHeader className="relative rounded-xl border border-blue-gray-50 bg-white py-3 pl-4 pr-8 shadow-lg shadow-blue-gray-900/5">
-        <TimelineIcon className="p-3 cursor-pointer" variant="outlined">
+        <TimelineIcon onClick={handleDelete} className="p-3 cursor-pointer" variant="outlined">
           <XMarkIcon className="h-5 w-5 hover:animate-spin" />
         </TimelineIcon>
         <div className="flex justify-between items-center w-full">
@@ -32,12 +62,12 @@ const TaskView = ({ task }) => {
             <div className="w-max text-white">
               <Chip
                 className="text-white"
-                color={
+                color={ task?.status?
                   (task?.status === "todo" && "blue") ||
                   (task?.status === "ongoing" && "pink") ||
-                  (task?.status === "complete" && "teal")
+                  (task?.status === "complete" && "teal"):'red'
                 }
-                value={task?.status}
+                value={task?.status?task?.status:'Not set'}
               />
             </div>
 
@@ -45,11 +75,12 @@ const TaskView = ({ task }) => {
               <Chip
                 className=""
                 color={
+                  task?.priority?
                   (task?.priority === "high" && "red") ||
                   (task?.priority === "moderate" && "lime") ||
-                  (task?.priority === "low" && "blue-gray")
+                  (task?.priority === "low" && "blue-gray"):'red'
                 }
-                value={task?.priority}
+                value={task?.priority?task?.priority:'Not set'}
               />
             </div>
           </div>
@@ -61,8 +92,12 @@ const TaskView = ({ task }) => {
 
 import PropTypes from 'prop-types';
 import { convertTime } from "../../../utils/convertTime";
+import toast from "react-hot-toast";
+import swal from "sweetalert";
+import useXiosSecure from "../../../hooks/secure/useXiosSecure";
 
 TaskView.propTypes = {
-    task: PropTypes.object.isRequired,
+    task: PropTypes.object,
+    refetch: PropTypes.func,
 };
 export default TaskView;

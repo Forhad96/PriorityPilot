@@ -16,3 +16,9 @@ const SelectPriority = ({setPriority}) => {
     );
 };
 export default SelectPriority;
+
+import PropTypes from 'prop-types';
+
+SelectPriority.propTypes = {
+    setPriority: PropTypes.func.isRequired,
+};

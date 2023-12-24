@@ -1,9 +1,7 @@
 import {
   Input,
   Textarea,
-  Select,
   Button,
-  Option,
   Timeline,
 } from "@material-tailwind/react";
 import { useForm } from "react-hook-form";
@@ -15,6 +13,7 @@ import toast from "react-hot-toast";
 import useGetSecureData from "../../../hooks/secure/useGetSecureData";
 import { useState } from "react";
 import SelectPriority from "../../../components/SelectPriority/SelectPriority";
+import Loading from "../../../shared/Loading/Loading";
 
 const AddTask = () => {
   const [priority, setPriority] = useState("");
@@ -22,7 +21,7 @@ const AddTask = () => {
   const axiosSecure = useXiosSecure()
   const apiUrl = "/tasks";
   const mutationKey = "tasks";
-  const { data: tasks,refetch } = useGetSecureData(apiUrl, mutationKey);
+  const { data: tasks,refetch,isLoading } = useGetSecureData(apiUrl, mutationKey);
 
   const {
     register,
@@ -48,27 +47,24 @@ const AddTask = () => {
       console.log(res);
       if (res.data.insertedId){
         refetch()
-      }
         // Show toast notification on success
         toast.success("Post successful!");
+      }
 
-      // const res = await
     } catch (error) {
       console.log(error);
       toast.error("Error during post");
     }
   };
 
-  // if (isLoading) {
-  //   return <p>Loading...</p>;
-  // }
+  if (isLoading) {
+    return <Loading/>;
+  }
 
-  // if (isError) {
-  //   return <p>Error occurred</p>;
-  // }
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 gap-5  mt-4">
+      
       <form
         className="space-y-6 max-w-md max-h-[480px] shadow-lg border-2 p-4 rounded-xl"
         onSubmit={handleSubmit(onSubmit)}
@@ -108,9 +104,9 @@ const AddTask = () => {
       </form>
       {/* right side components */}
 
-      <Timeline className=" overflow-y-scroll">
-        {tasks?.map((task, idx) => (
-          <TaskView task={task} key={task.id} />
+      <Timeline className=" overflow-y-scroll max-h-[600px]">
+        {tasks?.map((task) => (
+          <TaskView task={task} refetch={refetch} key={task._id} />
         ))}
       </Timeline>
     </div>
@@ -118,118 +114,4 @@ const AddTask = () => {
 };
 export default AddTask;
 
-const tasks = [
-  {
-    id: "1",
-    title: "Create wireframes",
-    description:
-      "Create initial wireframes and mockups for new website design in Figma",
-    status: "todo",
-    priority: "high",
-    deadline: "2023-01-15T14:00:00",
-    createdBy: "23472834",
-    assignedTo: ["1234839", "8743289"],
-  },
 
-  {
-    id: "2",
-    title: "Write blog post",
-    description: "Write a blog post about latest product features to publish",
-    status: "ongoing",
-    priority: "moderate",
-    deadline: "2023-01-22T09:00:00",
-    createdBy: "8743289",
-    assignedTo: ["8743289"],
-  },
-  {
-    id: "3",
-    title: "Write blog post",
-    description: "Write a blog post about latest product features to publish",
-    status: "ongoing",
-    priority: "moderate",
-    deadline: "2023-01-22T09:00:00",
-    createdBy: "8743289",
-    assignedTo: ["8743289"],
-  },
-  {
-    id: "4",
-    title: "Write blog post",
-    description: "Write a blog post about latest product features to publish",
-    status: "inprogress",
-    priority: "moderate",
-    deadline: "2023-01-22T09:00:00",
-    createdBy: "8743289",
-    assignedTo: ["8743289"],
-  },
-  {
-    id: "5",
-    title: "Write blog post",
-    description: "Write a blog post about latest product features to publish",
-    status: "inprogress",
-    priority: "moderate",
-    deadline: "2023-01-22T09:00:00",
-    createdBy: "8743289",
-    assignedTo: ["8743289"],
-  },
-  {
-    id: "6",
-    title: "Write blog post",
-    description: "Write a blog post about latest product features to publish",
-    status: "inprogress",
-    priority: "moderate",
-    deadline: "2023-01-22T09:00:00",
-    createdBy: "8743289",
-    assignedTo: ["8743289"],
-  },
-  {
-    id: "7",
-    title: "Write blog post",
-    description: "Write a blog post about latest product features to publish",
-    status: "inprogress",
-    priority: "moderate",
-    deadline: "2023-01-22T09:00:00",
-    createdBy: "8743289",
-    assignedTo: ["8743289"],
-  },
-  {
-    id: "8",
-    title: "Write blog post",
-    description: "Write a blog post about latest product features to publish",
-    status: "inprogress",
-    priority: "moderate",
-    deadline: "2023-01-22T09:00:00",
-    createdBy: "8743289",
-    assignedTo: ["8743289"],
-  },
-  {
-    id: "9",
-    title: "Write blog post",
-    description: "Write a blog post about latest product features to publish",
-    status: "inprogress",
-    priority: "moderate",
-    deadline: "2023-01-22T09:00:00",
-    createdBy: "8743289",
-    assignedTo: ["8743289"],
-  },
-  {
-    id: "10",
-    title: "Write blog post",
-    description: "Write a blog post about latest product features to publish",
-    status: "inprogress",
-    priority: "moderate",
-    deadline: "2023-01-22T09:00:00",
-    createdBy: "8743289",
-    assignedTo: ["8743289"],
-  },
-
-  {
-    id: "11",
-    title: "Update servers",
-    description: "Update packages and deploy new code to production servers",
-    status: "todo",
-    priority: "critical",
-    deadline: "2023-01-30T00:00:00",
-    createdBy: "1234839",
-    assignedTo: ["1234839", "23472834"],
-  },
-];
