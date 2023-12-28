@@ -14,6 +14,7 @@ import Ongoing from "../pages/Dashboard/Ongoing/Ongoing";
 import Tasks from "../pages/Dashboard/Tasks/Tasks";
 import Complete from "../pages/Dashboard/Complete/Complete";
 import Statistics from "../pages/Dashboard/Statistics/Statistics";
+import UpdateTask from "../pages/Dashboard/UpdateTask/UpdateTask";
 
 const route = createBrowserRouter([
   {
@@ -72,6 +73,10 @@ const route = createBrowserRouter([
         path: "complete",
         element: <Complete />,
       },
+      {
+        path:'updateTask',
+        element:<UpdateTask/>
+      }
     ],
   },
 ]);

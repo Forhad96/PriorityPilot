@@ -1,7 +1,5 @@
-
 import { useEffect } from "react";
 import {
-
   Button,
   CardHeader,
   Tab,
@@ -9,7 +7,7 @@ import {
   TabsHeader,
   Typography,
 } from "@material-tailwind/react";
-import { TaskCard } from "../../../components/TaskCard/TaskCard";
+import { TaskCard } from "../../../shared/TaskCard/TaskCard";
 import { PlusIcon } from "@heroicons/react/24/solid";
 import useGetSecureData from "../../../hooks/secure/useGetSecureData";
 import Loading from "../../../shared/Loading/Loading";
@@ -17,24 +15,20 @@ import { useState } from "react";
 import { Modal } from "../../../shared/Modal/Modal";
 import CreateTodo from "../CreateTodo/CreateTodo";
 
-
-
 const Tasks = () => {
   const [status, setStatus] = useState("");
   const [open, setOpen] = useState(false);
   const apiUrl = `/tasks/${status}`;
   const key = "tasks";
   const { data: tasks, isLoading, refetch } = useGetSecureData(apiUrl, key);
-useEffect(()=>{
-  if(status){
-    refetch()
-  }
-},[status,refetch])
+  useEffect(() => {
+    if (status) {
+      refetch();
+    }
+  }, [status, refetch]);
   if (isLoading) {
     return <Loading />;
   }
-
-
 
   return (
     <>
@@ -58,12 +52,8 @@ useEffect(()=>{
         <div className="flex flex-col items-center justify-between gap-4 md:flex-row">
           <Tabs value="all" className="w-full md:w-max">
             <TabsHeader>
-              {TABS.map(({ label, value,}) => (
-                <Tab
-                  key={value}
-                  onClick={() => setStatus(value)}
-                  value={value}
-                >
+              {TABS.map(({ label, value }) => (
+                <Tab key={value} onClick={() => setStatus(value)} value={value}>
                   &nbsp;&nbsp;{label}&nbsp;&nbsp;
                 </Tab>
               ))}
@@ -90,16 +80,13 @@ const TABS = [
   {
     label: "All",
     value: "all",
-
   },
   {
     label: "Ongoing",
     value: "ongoing",
-
   },
   {
     label: "Complete",
     value: "complete",
-
   },
 ];

@@ -19,10 +19,20 @@ import {
   Chip,
 } from "@material-tailwind/react";
 import { convertTime } from "../../utils/convertTime";
+import PropTypes from "prop-types";
+import useXiosSecure from "../../hooks/secure/useXiosSecure";
+import toast from "react-hot-toast";
+import { Modal } from "../Modal/Modal";
+import UpdateTask from "../../pages/Dashboard/UpdateTask/UpdateTask";
+
+
+
+//components starts
 
 export function TaskCard({ task, refetch }) {
   const apiUrl = "/tasks/";
   const axiosSecure = useXiosSecure();
+    const [open, setOpen] = useState(false);
   const [statusValue, setStatusValue] = useState("");
 
   const {
@@ -66,6 +76,9 @@ export function TaskCard({ task, refetch }) {
     }
   };
 
+  const handleUpdate= ()=>{
+    console.log('ok');
+  }
   useEffect(() => {
     const postData = async () => {
       try {
@@ -147,7 +160,7 @@ export function TaskCard({ task, refetch }) {
           </select>
 
           <Tooltip content="Edit Task">
-            <IconButton variant="text">
+            <IconButton onClick={() =>setOpen(true)} variant="text">
               <PencilIcon className="h-4 w-4" />
             </IconButton>
           </Tooltip>
@@ -158,12 +171,14 @@ export function TaskCard({ task, refetch }) {
           </Tooltip>
         </CardFooter>
       </Card>
+
+      <Modal open={open} setOpen={setOpen}>
+        <UpdateTask setOpen={setOpen} taskId={_id}/>
+      </Modal>
     </>
   );
 }
-import PropTypes from "prop-types";
-import useXiosSecure from "../../hooks/secure/useXiosSecure";
-import toast from "react-hot-toast";
+
 
 TaskCard.propTypes = {
   task: PropTypes.object.isRequired,

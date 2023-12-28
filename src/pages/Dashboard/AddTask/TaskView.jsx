@@ -8,6 +8,14 @@ import {
   Typography,
   Chip,
 } from "@material-tailwind/react";
+import PropTypes from "prop-types";
+import { convertTime } from "../../../utils/convertTime";
+import toast from "react-hot-toast";
+import swal from "sweetalert";
+import useXiosSecure from "../../../hooks/secure/useXiosSecure";
+
+
+// component start
 const TaskView = ({ task,refetch }) => {
 const axiosSecure = useXiosSecure()
   const apiUrl = "/tasks/";
@@ -90,11 +98,7 @@ const axiosSecure = useXiosSecure()
   );
 };
 
-import PropTypes from 'prop-types';
-import { convertTime } from "../../../utils/convertTime";
-import toast from "react-hot-toast";
-import swal from "sweetalert";
-import useXiosSecure from "../../../hooks/secure/useXiosSecure";
+
 
 TaskView.propTypes = {
     task: PropTypes.object,

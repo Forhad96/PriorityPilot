@@ -6,7 +6,7 @@ import {
   TabsHeader,
   Typography,
 } from "@material-tailwind/react";
-import { TaskCard } from "../../../components/TaskCard/TaskCard";
+import { TaskCard } from "../../../shared/TaskCard/TaskCard";
 import { PlusIcon } from "@heroicons/react/24/solid";
 import useGetSecureData from "../../../hooks/secure/useGetSecureData";
 import Loading from "../../../shared/Loading/Loading";
@@ -25,7 +25,7 @@ const Complete = () => {
     return <Loading />;
   }
 
-console.log(status);
+  console.log(status);
   return (
     <div>
       <CardHeader floated={false} shadow={false} className="rounded-none">
@@ -49,11 +49,16 @@ console.log(status);
 
       <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
         {tasks?.map((task) => (
-          <TaskCard refetch={refetch} setStatus={setStatus} key={task._id} task={task} />
+          <TaskCard
+            refetch={refetch}
+            setStatus={setStatus}
+            key={task._id}
+            task={task}
+          />
         ))}
       </div>
       <Modal open={open} setOpen={setOpen}>
-        <CreateTodo  setOpen={setOpen} />
+        <CreateTodo setOpen={setOpen} />
       </Modal>
     </div>
   );

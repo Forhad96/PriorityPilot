@@ -16,7 +16,6 @@ const useGetSecureData = (endpoint, key) => {
   };
 
   const queryResult = useQuery(queryConfig);
-
   return queryResult;
 };
 

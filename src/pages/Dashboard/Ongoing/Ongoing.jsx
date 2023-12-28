@@ -1,9 +1,5 @@
-import {
-  Button,
-  CardHeader,
-  Typography,
-} from "@material-tailwind/react";
-import { TaskCard } from "../../../components/TaskCard/TaskCard";
+import { Button, CardHeader, Typography } from "@material-tailwind/react";
+import { TaskCard } from "../../../shared/TaskCard/TaskCard";
 import { PlusIcon } from "@heroicons/react/24/solid";
 import useGetSecureData from "../../../hooks/secure/useGetSecureData";
 import Loading from "../../../shared/Loading/Loading";
@@ -12,7 +8,6 @@ import { Modal } from "../../../shared/Modal/Modal";
 import CreateTodo from "../CreateTodo/CreateTodo";
 
 const Ongoing = () => {
-
   const [open, setOpen] = useState(false);
   const apiUrl = `/tasks/ongoing`;
   const key = "tasks";
