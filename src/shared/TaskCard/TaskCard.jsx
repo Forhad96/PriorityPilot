@@ -27,10 +27,10 @@ import UpdateTask from "../../pages/Dashboard/UpdateTask/UpdateTask";
 
 
 
+const getApiUrl = "/tasksStatus/";
 //components starts
 
 export function TaskCard({ task, refetch }) {
-  const apiUrl = "/tasks/";
   const axiosSecure = useXiosSecure();
     const [open, setOpen] = useState(false);
   const [statusValue, setStatusValue] = useState("");
@@ -44,7 +44,7 @@ export function TaskCard({ task, refetch }) {
     deadline_date,
     deadline_time,
     createdBy,
-  } = task;
+  } = task || '';
 
   const handleDelete = async () => {
     try {
@@ -57,7 +57,8 @@ export function TaskCard({ task, refetch }) {
       });
 
       if (willDelete) {
-        const res = await axiosSecure.delete(apiUrl + _id);
+
+        const res = await axiosSecure.delete(`/tasks/${_id}`);
         console.log(res);
 
         if (res.data.deletedCount > 0) {
@@ -76,9 +77,7 @@ export function TaskCard({ task, refetch }) {
     }
   };
 
-  const handleUpdate= ()=>{
-    console.log('ok');
-  }
+
   useEffect(() => {
     const postData = async () => {
       try {
@@ -88,7 +87,7 @@ export function TaskCard({ task, refetch }) {
           newStatus === "complete" ||
           newStatus === "ongoing"
         ) {
-          const res = await axiosSecure.put(apiUrl + _id, { newStatus });
+          const res = await axiosSecure.put(getApiUrl + _id, { newStatus });
           refetch();
           console.log(res);
         }
@@ -131,7 +130,7 @@ export function TaskCard({ task, refetch }) {
           <Typography variant="h5" color="blue-gray" className="mb-2">
             {title}
           </Typography>
-          <Typography>{description}</Typography>
+          <Typography>{description ? description :''}</Typography>
           <div className="w-max flex justify-between gap-3">
             <Chip
               size="sm"

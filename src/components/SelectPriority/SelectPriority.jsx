@@ -1,12 +1,13 @@
 import { Option, Select } from "@material-tailwind/react";
 
-const SelectPriority = ({setPriority,defaultValue}) => {
+const SelectPriority = ({setPriority,defaultValue,priority}) => {
     return (
       <div>
         <Select
           onChange={(value) => setPriority(value)}
           color="teal"
-          value={defaultValue&&defaultValue}
+          value={priority&&priority}
+          // defaultValue={priority}
           label="Select priority"
         >
           <Option value="high">High</Option>

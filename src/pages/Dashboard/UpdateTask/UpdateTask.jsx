@@ -2,39 +2,43 @@ import { Button, Input, Textarea, Typography } from "@material-tailwind/react";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import useAuth from "../../../hooks/Auth/UseAuth";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import useXiosSecure from "../../../hooks/secure/useXiosSecure";
 import SelectPriority from "../../../components/SelectPriority/SelectPriority";
 
 const UpdateTask = ({ setOpen, taskId }) => {
-  const [priority, setPriority] = useState("");
+  const [priority, setPriority] = useState('');
   const axiosSecure = useXiosSecure();
-  const { user } = useAuth();
-  const apiUrl = `/task/${taskId}`;
+  const getUrl = `/task/${taskId}`;
+  const updateUrl = `/tasks/${taskId}`
   const key = 'task'
-  const {data:task} = useGetSecureData(apiUrl,key)
+  const {data:task} = useGetSecureData(getUrl,key)
 
+
+  useEffect(()=>{
+    setPriority(task?.priority)
+  },[task])
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
-
+console.log();
   const onSubmit = async (data) => {
-    const { title, deadline_date, deadline_time } = data;
+    const { title,priority, deadline_date,description, deadline_time } = data;
     console.log(data);
     const task = {
-      createdBy: user?.email,
-      createdAt: new Date(),
       title,
-      status: "todo",
       priority,
+      description,
       deadline_date,
       deadline_time,
+      last_update:new Date()
     };
 
     try {
-      // const res = await axiosSecure.post(apiUrl, task);
+      const res = await axiosSecure.put(updateUrl, task);
+      console.log(res);
       if (res.acknowledged) {
         toast.success("Todo Created");
       }
@@ -62,27 +66,48 @@ const UpdateTask = ({ setOpen, taskId }) => {
             <label htmlFor="title" className="text-gray-700 text-sm font-bold">
               Title
             </label>
-            <Input {...register("title")} value={task?.title} color="teal" label="Title" />
+            <Input
+              {...register("title")}
+              defaultValue={task?.title}
+              color="teal"
+              label="Title"
+            />
           </div>
-          <SelectPriority setPriority={setPriority} defaultValue={task?.priority} />
+          <SelectPriority
+            priority={priority}
+            setPriority={setPriority}
+            // defaultValue={task?.priority}
+          />
         </div>
         <div>
-          <Textarea color="teal" value={task?.description} label="Enter your task description" />
+          <Textarea
+            {...register("description", {
+              defaultValue: task?.description,
+            })}
+            color="teal"
+            defaultValue={task?.description}
+            label="Enter your task description"
+          />
           {/* Deadline starts here */}
           <div className="flex space-x-4 mt-5">
             <Input
-              {...register("deadline_date")}
+              {...register("deadline_date", {
+                defaultValue: task?.deadline_date,
+              })}
               color="teal"
               label="Deadline date"
-              value={task?.deadline_date}
+              defaultValue={task?.deadline_date}
               type="date"
             />
 
             <Input
-              {...register("deadline_time")}
+              {...register("deadline_time", {
+                defaultValue: task?.deadline_date,
+              })}
               color="teal"
               label="Deadline time"
-              value={task?.deadline_time}
+              defaultValue={task?.deadline_time}
+              // defaultValue={task?.deadline_time}
               type="time"
             />
           </div>
@@ -111,6 +136,6 @@ import PropTypes from "prop-types";
 import useGetSecureData from "../../../hooks/secure/useGetSecureData";
 
 UpdateTask.propTypes = {
-  setOpen: PropTypes.func.isRequired,
+  setOpen: PropTypes.func,
 };
 export default UpdateTask;

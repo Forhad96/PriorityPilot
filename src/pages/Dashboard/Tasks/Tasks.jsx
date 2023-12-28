@@ -16,7 +16,7 @@ import { Modal } from "../../../shared/Modal/Modal";
 import CreateTodo from "../CreateTodo/CreateTodo";
 
 const Tasks = () => {
-  const [status, setStatus] = useState("");
+  const [status, setStatus] = useState("all");
   const [open, setOpen] = useState(false);
   const apiUrl = `/tasks/${status}`;
   const key = "tasks";

@@ -33,13 +33,14 @@ const CreateTodo = ({setOpen}) => {
   
 
   const onSubmit = async (data) => {
-    const { title, deadline_date, deadline_time } = data;
+    const { title, deadline_date,description, deadline_time } = data;
     const task = {
       createdBy: user?.email,
       createdAt: new Date(),
       title,
       status:'todo',
       priority,
+      description,
       deadline_date,
       deadline_time,
     };
@@ -58,9 +59,9 @@ const CreateTodo = ({setOpen}) => {
   };
   return (
     <div className="m-8">
-        <Typography variant="h2" className="text-center">
-            Create Todo
-        </Typography>
+      <Typography variant="h2" className="text-center">
+        Create Todo
+      </Typography>
       <form
         className="space-y-6 shadow-lg border-2 p-4 rounded-xl"
         onSubmit={handleSubmit(onSubmit)}
@@ -72,10 +73,14 @@ const CreateTodo = ({setOpen}) => {
             </label>
             <Input {...register("title")} color="teal" label="Title" />
           </div>
-<SelectPriority setPriority={setPriority}/>
+          <SelectPriority setPriority={setPriority} />
         </div>
         <div>
-          <Textarea color="teal" label="Enter your task description" />
+          <Textarea
+            {...register("description")}
+            color="teal"
+            label="Enter your task description"
+          />
           {/* Deadline starts here */}
           <div className="flex space-x-4 mt-5">
             <Input
@@ -96,7 +101,13 @@ const CreateTodo = ({setOpen}) => {
           {/* Deadline ends here */}
         </div>
         <div>
-          <Button type="" onClick={()=>setOpen(false)} className="me-2" color="red" size="lg">
+          <Button
+            type=""
+            onClick={() => setOpen(false)}
+            className="me-2"
+            color="red"
+            size="lg"
+          >
             Cancel
           </Button>
           <Button type="submit" color="teal" size="lg">
