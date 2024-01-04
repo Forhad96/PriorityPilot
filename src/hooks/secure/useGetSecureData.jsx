@@ -2,7 +2,6 @@ import { useQuery } from "@tanstack/react-query";
 import useXiosSecure from "./useXiosSecure";
 
 const useGetSecureData = (endpoint, key) => {
-
   const axiosSecure = useXiosSecure();
 
   const fetchSecureData = async () => {

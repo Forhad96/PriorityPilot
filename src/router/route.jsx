@@ -15,6 +15,8 @@ import Tasks from "../pages/Dashboard/Tasks/Tasks";
 import Complete from "../pages/Dashboard/Complete/Complete";
 import Statistics from "../pages/Dashboard/Statistics/Statistics";
 import UpdateTask from "../pages/Dashboard/UpdateTask/UpdateTask";
+import Trash from "../pages/Trash/Trash";
+import Achieved from "../pages/Achieved/Achieved";
 
 const route = createBrowserRouter([
   {
@@ -76,6 +78,14 @@ const route = createBrowserRouter([
       {
         path:'updateTask',
         element:<UpdateTask/>
+      }
+      ,{
+        path:'trash',
+        element:<Trash/>
+      },
+      {
+        path:'achieved',
+        element:<Achieved/>
       }
     ],
   },

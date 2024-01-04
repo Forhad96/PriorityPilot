@@ -19,7 +19,7 @@ const AddTask = () => {
   const [priority, setPriority] = useState("");
   const { user } = useAuth();
   const axiosSecure = useXiosSecure()
-  const apiUrl = "/tasks";
+  const apiUrl = "/tasks/all";
   const mutationKey = "tasks";
   const { data: tasks,refetch,isLoading } = useGetSecureData(apiUrl, mutationKey);
 
@@ -29,6 +29,9 @@ const AddTask = () => {
     formState: { errors },
   } = useForm();
 
+  if(isLoading){
+    return <Loading/>
+  }
   const onSubmit = async (data) => {
     const { title, deadline_date, deadline_time } = data;
 
