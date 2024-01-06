@@ -1,8 +1,11 @@
--todo:create api for create new todo
--todo:create new todo and display
--todo:create modal for create new todo
--todo:create api for update todo
--todo:display todo data
+-create api for create new todo
+-create new todo and display
+-create modal for create new todo
+-create api for update todo
+-display todo data
+
+-todo:create multiple delete api 
+
 -todo:implement search functionality 
 -todo:validation 
 
@@ -47,3 +50,6 @@ Fetch tasks from backend API on mount and update lists on status change.
 
 Show toast notifications for task events using react-toastify
 Add page transitions and animations with Framer Motion
+
+
+todo:

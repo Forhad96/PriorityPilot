@@ -23,13 +23,17 @@ import {
 } from "@material-tailwind/react";
 import useGetSecureData from "../../hooks/secure/useGetSecureData";
 import { useEffect, useState } from "react";
+import useXiosSecure from "../../hooks/secure/useXiosSecure";
+import toast from "react-hot-toast";
+import swal from "sweetalert";
 const Trash = () => {
   const [selectAll, setSelectAll] = useState(false);
   const [selected, setSelected] = useState([]);
-  const [checked, setChecked] = useState(false);
+  // const [checked, setChecked] = useState(false);
+  const axiosSecure = useXiosSecure()
   const apiUrl = "/tasks/all";
   const key = "tasks";
-  const { data: tasks } = useGetSecureData(apiUrl, key);
+  const { data: tasks ,refetch} = useGetSecureData(apiUrl, key);
 
   useEffect(() => {
     if (selectAll) {
@@ -50,12 +54,46 @@ const Trash = () => {
     }
   }
 
-  console.log(selected);
+console.log(selected);
 
-  const handleSelectAll = () => {
-    // setSelectAll(true)
+  const handleDelete = async() => {
+
+   try {
+     let willDelete = await swal({
+       title: "Are you sure?",
+       text: "Once deleted, you will not be able to recover!",
+       icon: "warning",
+       buttons: true,
+       dangerMode: true,
+     });
+
+     if (willDelete) {
+          const res = await axiosSecure.delete("/deleteMultiple", {
+            data: { ids: selected },
+          });
+
+       if (res.data.deletedCount > 0) {
+  toast.success("Deleted Forever");
+         await swal("Delete successful", {
+           icon: "success",
+         });
+         refetch();
+       }
+     } else {
+       await swal("Your Task is safe!");
+     }
+   } catch (error) {
+     console.log(error);
+     toast.error(error.message);
+   }
+
+
+
+
+
+
+
   };
-  handleSelectAll();
   const TABLE_HEAD = [
     {
       key: "checkbox",
@@ -88,6 +126,8 @@ const Trash = () => {
             </Button>
           </div>
         </div>
+
+        <Button onClick={handleDelete} size="sm" variant="gradient">Delete Forever</Button>
       </CardHeader>
       <CardBody className="overflow-scroll px-0">
         <table className="mt-4 w-full min-w-max table-auto text-left">
