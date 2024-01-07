@@ -47,34 +47,48 @@ export function TaskCard({ task, refetch }) {
   } = task || '';
 
   const handleDelete = async () => {
-    try {
-      let willDelete = await swal({
-        title: "Are you sure?",
-        text: "Once deleted, you will not be able to recover this imaginary file!",
-        icon: "warning",
-        buttons: true,
-        dangerMode: true,
-      });
+try {
+  const res = await axiosSecure.put("/moveToTrash",{id:_id});
+  console.log(res);
+  if(res.data.modifiedCount > 0){
+    toast.success('your tasks move to trash')
+    refetch()
+  }
+} catch (error) {
+  console.log(error);
+  
+}
 
-      if (willDelete) {
 
-        const res = await axiosSecure.delete(`/tasks/${_id}`);
-        console.log(res);
 
-        if (res.data.deletedCount > 0) {
-          toast.success("successfully Removed");
-          await swal("Poof! Booking cancel successful", {
-            icon: "success",
-          });
-          refetch();
-        }
-      } else {
-        await swal("Your imaginary file is safe!");
-      }
-    } catch (error) {
-      console.log(error);
-      toast.error(error.message);
-    }
+    // try {
+    //   let willDelete = await swal({
+    //     title: "Are you sure?",
+    //     text: "Once deleted, you will not be able to recover this imaginary file!",
+    //     icon: "warning",
+    //     buttons: true,
+    //     dangerMode: true,
+    //   });
+
+    //   if (willDelete) {
+
+    //     const res = await axiosSecure.delete(`/tasks/${_id}`);
+    //     console.log(res);
+
+    //     if (res.data.deletedCount > 0) {
+    //       toast.success("successfully Removed");
+    //       await swal("Poof! Booking cancel successful", {
+    //         icon: "success",
+    //       });
+    //       refetch();
+    //     }
+    //   } else {
+    //     await swal("Your imaginary file is safe!");
+    //   }
+    // } catch (error) {
+    //   console.log(error);
+    //   toast.error(error.message);
+    // }
   };
 
 

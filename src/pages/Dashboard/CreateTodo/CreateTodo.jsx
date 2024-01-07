@@ -11,17 +11,14 @@ import useAuth from "../../../hooks/Auth/UseAuth";
 import useXiosSecure from "../../../hooks/secure/useXiosSecure";
 import toast from "react-hot-toast";
 
-
 import PropTypes from "prop-types";
 import SelectPriority from "../../../components/SelectPriority/SelectPriority";
 import { useState } from "react";
 
-
-
 // Components start
 
-const CreateTodo = ({setOpen}) => {
-  const [priority,setPriority] = useState('')
+const CreateTodo = ({ setOpen }) => {
+  const [priority, setPriority] = useState("");
   const axiosSecure = useXiosSecure();
   const { user } = useAuth();
   const apiUrl = "/tasks";
@@ -30,31 +27,31 @@ const CreateTodo = ({setOpen}) => {
     handleSubmit,
     formState: { errors },
   } = useForm();
-  
 
   const onSubmit = async (data) => {
-    const { title, deadline_date,description, deadline_time } = data;
+    const { title, deadline_date, description, deadline_time } = data;
     const task = {
       createdBy: user?.email,
       createdAt: new Date(),
       title,
-      status:'todo',
+      status: "todo",
       priority,
       description,
       deadline_date,
       deadline_time,
+      isTrash: "no",
+      achieved: "no",
     };
 
     try {
-        const res = await axiosSecure.post(apiUrl,task)
-        if (res.acknowledged){
-            toast.success('Todo Created')
-        } 
-        console.log(res);
+      const res = await axiosSecure.post(apiUrl, task);
+      if (res.acknowledged) {
+        toast.success("Todo Created");
+      }
+      console.log(res);
     } catch (error) {
-        console.log(error);
-        toast.error(error.message)
-        
+      console.log(error);
+      toast.error(error.message);
     }
   };
   return (
@@ -121,5 +118,5 @@ const CreateTodo = ({setOpen}) => {
 export default CreateTodo;
 
 CreateTodo.propTypes = {
-    setOpen: PropTypes.func.isRequired,
+  setOpen: PropTypes.func.isRequired,
 };
