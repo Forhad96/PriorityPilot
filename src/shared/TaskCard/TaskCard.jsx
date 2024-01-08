@@ -25,14 +25,12 @@ import toast from "react-hot-toast";
 import { Modal } from "../Modal/Modal";
 import UpdateTask from "../../pages/Dashboard/UpdateTask/UpdateTask";
 
-
-
 const getApiUrl = "/tasksStatus/";
 //components starts
 
 export function TaskCard({ task, refetch }) {
   const axiosSecure = useXiosSecure();
-    const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(false);
   const [statusValue, setStatusValue] = useState("");
 
   const {
@@ -44,22 +42,18 @@ export function TaskCard({ task, refetch }) {
     deadline_date,
     deadline_time,
     createdBy,
-  } = task || '';
+  } = task || "";
 
   const handleDelete = async () => {
-try {
-  const res = await axiosSecure.put("/moveToTrash",{id:_id});
-  console.log(res);
-  if(res.data.modifiedCount > 0){
-    toast.success('your tasks move to trash')
-    refetch()
-  }
-} catch (error) {
-  console.log(error);
-  
-}
-
-
+    try {
+      const res = await axiosSecure.put("/moveToTrash", { id: _id });
+      if (res.data.modifiedCount > 0) {
+        toast.success("your tasks move to trash");
+        refetch();
+      }
+    } catch (error) {
+      console.log(error);
+    }
 
     // try {
     //   let willDelete = await swal({
@@ -90,7 +84,6 @@ try {
     //   toast.error(error.message);
     // }
   };
-
 
   useEffect(() => {
     const postData = async () => {
@@ -144,7 +137,7 @@ try {
           <Typography variant="h5" color="blue-gray" className="mb-2">
             {title}
           </Typography>
-          <Typography>{description ? description :''}</Typography>
+          <Typography>{description ? description : ""}</Typography>
           <div className="w-max flex justify-between gap-3">
             <Chip
               size="sm"
@@ -173,7 +166,7 @@ try {
           </select>
 
           <Tooltip content="Edit Task">
-            <IconButton onClick={() =>setOpen(true)} variant="text">
+            <IconButton onClick={() => setOpen(true)} variant="text">
               <PencilIcon className="h-4 w-4" />
             </IconButton>
           </Tooltip>
@@ -186,12 +179,11 @@ try {
       </Card>
 
       <Modal open={open} setOpen={setOpen}>
-        <UpdateTask setOpen={setOpen} taskId={_id}/>
+        <UpdateTask setOpen={setOpen} taskId={_id} />
       </Modal>
     </>
   );
 }
-
 
 TaskCard.propTypes = {
   task: PropTypes.object.isRequired,

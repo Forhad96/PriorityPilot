@@ -1,4 +1,5 @@
 import {
+  ArrowUpRightIcon,
   EyeIcon,
   PencilIcon,
   PlusIcon,
@@ -26,12 +27,14 @@ import { useEffect, useState } from "react";
 import useXiosSecure from "../../hooks/secure/useXiosSecure";
 import toast from "react-hot-toast";
 import swal from "sweetalert";
+import { Modal } from "../../shared/Modal/Modal";
+import { TaskCard } from "../../shared/TaskCard/TaskCard";
 const Trash = () => {
   const [selectAll, setSelectAll] = useState(false);
   const [selected, setSelected] = useState([]);
-  // const [checked, setChecked] = useState(false);
+    const [open, setOpen] = useState(false);
   const axiosSecure = useXiosSecure()
-  const apiUrl = "/tasks/all";
+  const apiUrl = "/isTrash";
   const key = "tasks";
   const { data: tasks ,refetch} = useGetSecureData(apiUrl, key);
 
@@ -44,6 +47,7 @@ const Trash = () => {
     }
   }, [tasks, selectAll]);
 
+  console.log(typeof selected);
   function handleSelect(e) {
     const isChecked = e.target.checked;
     const value = e.target.value;
@@ -53,9 +57,6 @@ const Trash = () => {
       setSelected(selected.filter((item) => item !== value));
     }
   }
-
-console.log(selected);
-
   const handleDelete = async() => {
 
    try {
@@ -108,7 +109,6 @@ console.log(selected);
     "Title",
     "Deadline date",
     "Deadline time",
-    "Status",
     "Action",
   ];
   return (
@@ -127,7 +127,10 @@ console.log(selected);
           </div>
         </div>
 
-        <Button onClick={handleDelete} size="sm" variant="gradient">Delete Forever</Button>
+        <Button  onClick={handleDelete} size="sm" variant="outlined" className="flex items-center justify-center gap-1 disabled:cursor-not-allowed">
+          <TrashIcon color="red" className="h-4 w-4" />
+          Delete Forever
+        </Button>
       </CardHeader>
       <CardBody className="overflow-scroll px-0">
         <table className="mt-4 w-full min-w-max table-auto text-left">
@@ -138,13 +141,8 @@ console.log(selected);
                   key={index}
                   className="border-y border-blue-gray-100 bg-blue-gray-50/50 p-4"
                 >
-                  <Typography
-                    variant="small"
-                    color="blue-gray"
-                    className="font-normal leading-none opacity-70"
-                  >
+
                     {head.label || head}
-                  </Typography>
                 </th>
               ))}
             </tr>
@@ -174,8 +172,9 @@ console.log(selected);
                         <Typography
                           variant="small"
                           color="blue-gray"
-                          className="font-normal"
+                          className="font-normal flex items-center"
                         >
+                          <TrashIcon color="gray" className="h-4 w-4" />
                           {task?.title}
                         </Typography>
                         <Typography
@@ -207,32 +206,21 @@ console.log(selected);
                     </Typography>
                   </td>
                   <td className={classes}>
-                    <div className="w-max">
-                      <Chip
-                        variant="ghost"
-                        size="sm"
-                        value={task?.status}
-                        // color={online ? "green" : "blue-gray"}
-                      />
-                    </div>
-                  </td>
-                  <td className={classes}>
                     <Tooltip content="View Task">
-                      <IconButton variant="text">
+                      <IconButton onClick={() => setOpen(true)} variant="text">
                         <EyeIcon className="h-4 w-4" />
                       </IconButton>
                     </Tooltip>
-                    <Tooltip content="Edit Task">
+                    <Tooltip content="Move">
                       <IconButton variant="text">
-                        <PencilIcon className="h-4 w-4" />
-                      </IconButton>
-                    </Tooltip>
-                    <Tooltip content="Delete Task">
-                      <IconButton variant="text">
-                        <TrashIcon color="red" className="h-4 w-4" />
+                        <ArrowUpRightIcon className="h-4 w-4" />
                       </IconButton>
                     </Tooltip>
                   </td>
+
+                  <Modal open={open} setOpen={setOpen}>
+                    <TaskCard task={task} />
+                  </Modal>
                 </tr>
               );
             })}
