@@ -111,6 +111,20 @@ const Trash = () => {
     "Deadline time",
     "Action",
   ];
+
+
+  const handleRestore=async(_id)=>{
+    try {
+      const res = await axiosSecure.put("/taskRestore", { id: _id });
+      if (res.data.modifiedCount > 0) {
+        toast.success("your tasks is successfully restore form trash");
+        refetch();
+      }
+    } catch (error) {
+      console.log(error);
+      
+    }
+  }
   return (
     <Card className="h-full w-full my-5">
       <CardHeader floated={false} shadow={false} className="rounded-none">
@@ -206,13 +220,8 @@ const Trash = () => {
                     </Typography>
                   </td>
                   <td className={classes}>
-                    <Tooltip content="View Task">
-                      <IconButton onClick={() => setOpen(true)} variant="text">
-                        <EyeIcon className="h-4 w-4" />
-                      </IconButton>
-                    </Tooltip>
                     <Tooltip content="Move">
-                      <IconButton variant="text">
+                      <IconButton onClick={()=>handleRestore(task?._id)} variant="text">
                         <ArrowUpRightIcon className="h-4 w-4" />
                       </IconButton>
                     </Tooltip>
